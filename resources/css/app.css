@@ -56,6 +56,27 @@
     padding: 0.4em 0.6em;
 }
 
+.star-rating {
+    display: inline-flex;
+    direction: rtl;
+}
+
+.star {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+input[type="radio"]:checked ~ label,
+input[type="radio"]:checked ~ label ~ label {
+    color: gold;
+}
+
+.star:hover,
+.star:hover ~ label {
+    color: #ffc107;
+}
 
 @keyframes fadeIn {
     from {

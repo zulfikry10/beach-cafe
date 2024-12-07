@@ -1,18 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-  {{-- uncomment this aftr login, register done --}}
     {{-- @php
         if ($user->role == 'Customer') {
-            $color = 'bg-gradient-primary';
+            $color = 'bg-primary';
         } elseif ($user->role == 'Staff') {
-            $color = 'bg-gradient-green';  
+            $color = 'bg-success';  
         }
     @endphp --}}
 
     <div class="container mt-4">
         <div class="card shadow-sm border-0 rounded">
-            <div class="card-header bg-gradient-primary text-white rounded-top">
+            <div class="card-header bg-primary text-white rounded-top">
                 <h5 class="mb-0">Feedback List</h5>
             </div>
             <div class="card-body">

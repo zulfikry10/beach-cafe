@@ -16,7 +16,6 @@
     @vite(['resources/css/app.css'])
 </head>
 <body style="background-color: rgba(243, 245, 250, 1)">
-    {{-- uncomment this aftr login, register done --}}
     {{-- @php
         if ($user->role == 'Customer') {
             $color = 'main-background-customer';

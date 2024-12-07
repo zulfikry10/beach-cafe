@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Feedback;
+use App\Models\Menu;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,6 +12,10 @@ use Illuminate\View\View;
 
 class FeedbackController extends Controller
 {
+    public function displaydummy(): View {
+        return view('manageFeedback.dummydisplay');
+    }
+
     //
     public function viewListOFeedback($id): View {
         $user = User::findOrFail($id);
@@ -30,8 +35,31 @@ class FeedbackController extends Controller
         ]);
     }
 
-    public function viewAddFeedback(): View {
+    public function viewAddFeedback($menu_id): View {
+        $menu = Menu::findOrFail($menu_id);
 
-        return view('manageFeedback.addFeedback');
+        return view('manageFeedback.addFeedback', [
+            'menu' => $menu,
+        ]);
+    }
+
+    public function createFeedback(Request $request) {
+        $request->validate([
+            'user_id' => ['required', 'exists:users,id'],
+            'menu_id' => ['required', 'exists:menus,id'],
+            'comment' => ['required', 'string', 'max:50'],
+            'rating' => ['required', 'integer'],
+            'date' => ['required', 'date', 'before_or_equal:today'],
+        ]);
+
+        Feedback::create([
+            'user_id' => $request->user_id,
+            'menu_id' => $request->menu_id,
+            'comment' => $request->comment,
+            'rating' => $request->rating,
+            'date' => $request->date,
+        ]);
+
+        return redirect()->route('dummydisplay');
     }
 }

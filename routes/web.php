@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FeedbackController;
+use App\Models\Feedback;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +19,7 @@ Route::get('/', function () {
     return view('default');
 });
 
+Route::get('/dummydisplay', [FeedbackController::class, 'displaydummy'])->name('dummydisplay');
 Route::get('/list_of_feedback/{id}', [FeedbackController::class, 'viewListOFeedback'])->name('view_all_feedback');
-Route::get('/add_feedback', [FeedbackController::class, 'viewListOFeedback'])->name('viewAddFeedback');
+Route::get('/add_feedback/{menu_id}', [FeedbackController::class, 'viewAddFeedback'])->name('view_add_Feedback');
+Route::post('/add_feedback/create', [FeedbackController::class, 'createFeedback'])->name('create_feedback');
