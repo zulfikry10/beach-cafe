@@ -18,4 +18,5 @@ Route::get('/', function () {
     return view('default');
 });
 
-Route::get('/listoffeedback/{id}', [FeedbackController::class, 'viewListOFeedback'])->name('view_all_feedback');
+Route::get('/list_of_feedback/{id}', [FeedbackController::class, 'viewListOFeedback'])->name('view_all_feedback');
+Route::get('/add_feedback', [FeedbackController::class, 'viewListOFeedback'])->name('viewAddFeedback');
