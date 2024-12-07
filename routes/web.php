@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,5 @@ Route::get('/', function () {
 
 Route::get('/list_of_feedback/{id}', [FeedbackController::class, 'viewListOFeedback'])->name('view_all_feedback');
 Route::get('/add_feedback', [FeedbackController::class, 'viewListOFeedback'])->name('viewAddFeedback');
+
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
