@@ -5,6 +5,7 @@ use App\Http\Controllers\MenuController;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +25,4 @@ Route::get('/dummydisplay', [FeedbackController::class, 'displaydummy'])->name('
 Route::get('/list_of_feedback/{id}', [FeedbackController::class, 'viewListOFeedback'])->name('view_all_feedback');
 Route::get('/add_feedback/{menu_id}', [FeedbackController::class, 'viewAddFeedback'])->name('view_add_Feedback');
 Route::post('/add_feedback/create', [FeedbackController::class, 'createFeedback'])->name('create_feedback');
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
