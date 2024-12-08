@@ -29,10 +29,6 @@
                     <input type="text" class="form-control border-0 bg-light" id="feedbackDate" 
                            name="date" value="{{ $feedback->date }}" readonly>
                 </div>
-
-                <div class="text-end">
-                    <button type="submit" class="btn btn-primary px-4 rounded-pill">Add Feedback</button>
-                </div>
             </div>
         </div>
     </div>
