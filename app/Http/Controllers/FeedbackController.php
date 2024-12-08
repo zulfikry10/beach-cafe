@@ -27,11 +27,12 @@ class FeedbackController extends Controller
         }
 
         foreach ($feedbacks as $fb) {
-            $fb->date = Carbon::parse()->format(' j F Y');
+            $fb->date = Carbon::parse($fb->date)->format(' j F Y');
         }
 
         return view('manageFeedback.listofFeedback', [
             'feedbacks' => $feedbacks,
+            'user' => $user,
         ]);
     }
 
@@ -40,6 +41,16 @@ class FeedbackController extends Controller
 
         return view('manageFeedback.addFeedback', [
             'menu' => $menu,
+        ]);
+    }
+
+    public function viewFeedbackDetails($id): View {
+        $feedback = Feedback::findOrFail($id);
+
+        $feedback->date = Carbon::parse($feedback->date)->format('j F Y');
+
+        return view('manageFeedback.feedbackDetails', [
+            'feedback' => $feedback,
         ]);
     }
 
@@ -60,6 +71,13 @@ class FeedbackController extends Controller
             'date' => $request->date,
         ]);
 
-        return redirect()->route('dummydisplay');
+        return redirect()->route('view_all_feedback', ['id' => Auth::id() ?? 2]);
+    }
+
+    public function deleteFeedback($id) {
+        $feedback = Feedback::findOrFail($id);
+        $feedback->delete();
+
+        return redirect()->route('view_all_feedback', ['id' => Auth::id() ?? 3]);
     }
 }
