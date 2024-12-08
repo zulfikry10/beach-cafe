@@ -1,5 +1,6 @@
 .image-container {
-    height: 200px; /* Adjust height as needed */
+    height: 100px; /* Adjust height as needed */
+    width: 100px;
     overflow: hidden;
 }
 
