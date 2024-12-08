@@ -1,7 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container mt-4">
+    @if (session('blue-message'))
+        <div class="alert alert-primary text-primary" id="quick-message">
+            {{ session('blue-message') }}
+        </div>
+    @elseif (session('red-message'))
+        <div class="alert alert-danger text-danger" id="quick-message">
+            {{ session('red-message') }}
+        </div>
+    @endif
+
         <div class="card shadow-sm border-0 rounded">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Add Feedback</h5>
@@ -9,7 +20,6 @@
             <div class="card-body">
                 <form action="{{ route('create_feedback') }}" method="POST">
                     @csrf
-                
                     <input type="hidden" name="user_id" value="{{ $user->id ?? 5 }}">
                     <input type="hidden" name="menu_id" value="{{ $menu->id }}">
                 
@@ -54,7 +64,6 @@
                         <button type="submit" class="btn btn-primary">Add Feedback</button>
                     </div>
                 </form>
-                
             </div>
         </div>
     </div>

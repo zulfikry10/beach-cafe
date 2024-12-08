@@ -7,7 +7,6 @@ use App\Models\Menu;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class FeedbackController extends Controller
@@ -16,7 +15,6 @@ class FeedbackController extends Controller
         return view('manageFeedback.dummydisplay');
     }
 
-    //
     public function viewListOFeedback($id): View {
         $user = User::findOrFail($id);
 
@@ -71,13 +69,14 @@ class FeedbackController extends Controller
             'date' => $request->date,
         ]);
 
-        return redirect()->route('view_all_feedback', ['id' => Auth::id() ?? 2]);
+        return redirect()->route('view_add_Feedback', ['menu_id' => $request->menu_id])->with('blue-message', 'Thank you for your feedback!');
     }
 
     public function deleteFeedback($id) {
         $feedback = Feedback::findOrFail($id);
+        $user = $feedback->user;
         $feedback->delete();
 
-        return redirect()->route('view_all_feedback', ['id' => Auth::id() ?? 3]);
+        return redirect()->route('view_all_feedback', ['id' => $user->id])->with('red-message', 'Feedback Successfully Deleted!');
     }
 }

@@ -13,7 +13,7 @@
 
     <title>Beach Cafe</title>
 
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body style="background-color: rgba(243, 245, 250, 1)">
     {{-- @php
@@ -27,7 +27,7 @@
     <div>
         @include('layouts.navigation')
         <div class="fade-in">
-            <div class="d-flex justify-content-between align-items-center main-background-customer">
+            <div class="d-flex justify-content-between align-items-center {{ $color ?? 'main-background-customer' }}">
                 <div class="h1 fw-bold ms-5" style="font-family: 'Poller One', sans-serif;">BEACH CAFE</div>
                 <img class="main-img me-5" src="{{ asset('asset/default-image/beach-cafe.png') }}" alt="beach-cafe.png">
             </div>
