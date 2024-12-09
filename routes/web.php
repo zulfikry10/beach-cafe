@@ -25,4 +25,16 @@ Route::get('/dummydisplay', [FeedbackController::class, 'displaydummy'])->name('
 Route::get('/list_of_feedback/{id}', [FeedbackController::class, 'viewListOFeedback'])->name('view_all_feedback');
 Route::get('/add_feedback/{menu_id}', [FeedbackController::class, 'viewAddFeedback'])->name('view_add_Feedback');
 Route::post('/add_feedback/create', [FeedbackController::class, 'createFeedback'])->name('create_feedback');
+
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+
+
+Route::get('/staff-menu', [MenuController::class, 'staffMenu']);
+// In your routes/web.php
+Route::get('/menu/{menu}', [MenuController::class, 'show'])->name('menu.show');
+Route::delete('/menu/{menu}', [MenuController::class, 'destroy'])->name('menu.destroy');
+// In your routes/web.php file
+Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
+Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+Route::put('/menu/{menu}', [MenuController::class, 'update'])->name('menu.update');
+Route::get('/staff-menu', [MenuController::class, 'staffMenu'])->name('staff-menu');
