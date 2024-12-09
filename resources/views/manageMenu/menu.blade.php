@@ -9,7 +9,7 @@
             <div class="col-md-4 mb-4">
                 <div class="card text-center">
                     <div class="image-container">
-                        <img src="{{ asset('asset/default-image/' . $item->image_path) }}" class="card-img-top img-fluid" alt="{{ $item->name }}">
+                        <img src="{{ asset('asset/default-image/' . $item->image_path) }}" class="card-img-top img-fluid" alt="{{ $item->name }}" >
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $item->name }}</h5>
