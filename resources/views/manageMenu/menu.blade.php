@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $item->name }}</h5>
                         <p class="card-text">RM {{ $item->price }}</p>
-                        <p class="card-text">Status: {{ $item->status }}</p>
+                        <p class="card-text">Status:: {{ $item->status }}</p>
                     </div>
                 </div>
             </div>
