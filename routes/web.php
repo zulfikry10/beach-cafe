@@ -38,3 +38,4 @@ Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
 Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 Route::put('/menu/{menu}', [MenuController::class, 'update'])->name('menu.update');
 Route::get('/staff-menu', [MenuController::class, 'staffMenu'])->name('staff-menu');
+Route::get('/add-menu', [MenuController::class, 'addMenu'])->name('add-menu');
