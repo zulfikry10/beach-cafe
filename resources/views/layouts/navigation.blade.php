@@ -1,14 +1,49 @@
+<head>
+    <style>
+        .topnav {
+  overflow: hidden;
+  background-color: #fff;
+  
+  ;
+}
 
-<nav class="navbar navbar-expand-lg bg-white shadow-sm fixed-top" style="min-height: 70px">
-    <div class="container-fluid h-100">
-        <div class="d-flex justify-content-between align-items-center w-100">
-            <div class="d-flex align-items-center ms-auto me-5">
-                <a href="" class="text-nav fw-bold text-black me-3">Home</a>
-                <a href="" class="text-nav fw-bold text-black me-3">Menu</a>
-                <a href="{{ route('view_all_feedback', ['id' => $user->id ?? 5]) }}" class="text-nav fw-bold text-black me-3">Feedback</a>
-                <a href="" class="text-nav fw-bold text-black me-3">About Us</a>
-                <a href="" class="text-nav fw-bold text-black me-3">Log Out</a>
-            </div>
-        </div>
-    </div>
+.topnav a {
+  float: left;
+  color: #1e1e1e;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 18px;float: right;
+}
+
+.topnav a:hover {
+  color: #1aa781;
+}
+
+.topnav a.active {
+  background-color: #1aa781;
+  color: white;
+  float: left;
+  white-space: nowrap;
+}
+    </style>
+</head>
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+    <div class="topnav">
+        <a class="active" href="#home">Hello, {{ Auth::user()->name }}!</a>
+        
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <x-responsive-nav-link :href="route('logout')"
+                    onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </x-responsive-nav-link>
+        </form>
+        
+        <a href="#news">News</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+      </div>
 </nav>

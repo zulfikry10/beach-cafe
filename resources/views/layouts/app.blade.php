@@ -15,7 +15,7 @@
 
     @vite(['resources/css/app.css'])
 </head>
-<body style="background-color: rgba(243, 245, 250, 1)">
+<body >
     {{-- @php
         if ($user->role == 'Customer') {
             $color = 'main-background-customer';
@@ -26,10 +26,10 @@
 
     <div>
         @include('layouts.navigation')
-        <div class="fade-in">
+        <div style="background-color: #1aa781">
             <div class="d-flex justify-content-between align-items-center main-background-customer">
                 <div class="h1 fw-bold ms-5" style="font-family: 'Poller One', sans-serif;">BEACH CAFE</div>
-                <img class="main-img me-5" src="{{ asset('asset/default-image/beach-cafe.png') }}" alt="beach-cafe.png">
+                <img style="width:300px; padding:50px;" class="main-img me-5" src="{{ asset('asset/default-image/beach-cafe.png') }}" alt="beach-cafe.png">
             </div>
             <div class="mt-4 ms-4 me-4">
                 @yield('content')
