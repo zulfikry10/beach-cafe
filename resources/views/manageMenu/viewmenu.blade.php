@@ -16,7 +16,7 @@
                             @method('PUT')
                             <div class="row">
                                 <div class="col-md-4">
-                                    <img src="{{ asset('storage/' . $menu->image_path) }}" class="card-img-top" alt="{{ $menu->name }}">
+                                <img src="{{ asset('asset/default-image/' . $menu->image_path) }}" class="card-img-top img-fluid" alt="{{ $menu->name }}">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="form-group">
@@ -38,7 +38,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">Save</button>
-                            <a href="{{ route('menu.index') }}" class="btn btn-secondary">Back</a>
+                            <a href="{{ route('staff-menu') }}" class="btn btn-secondary">Back</a>
                         </form>
                     </div>
                 </div>

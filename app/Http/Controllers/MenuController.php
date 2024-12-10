@@ -65,4 +65,13 @@ public function store(Request $request)
 
     return redirect()->route('staff-menu')->with('success', 'Menu item added successfully.');
 }
+
+public function destroy(Menu $menu)
+{
+    $menu->delete();
+
+    return redirect()->route('staff-menu')->with('success', 'Menu item deleted successfully.');
+}
+
+    
 }

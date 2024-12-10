@@ -30,12 +30,9 @@ Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 
 
 Route::get('/staff-menu', [MenuController::class, 'staffMenu']);
-// In your routes/web.php
 Route::get('/menu/{menu}', [MenuController::class, 'show'])->name('menu.show');
 Route::delete('/menu/{menu}', [MenuController::class, 'destroy'])->name('menu.destroy');
-// In your routes/web.php file
 Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
-Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 Route::put('/menu/{menu}', [MenuController::class, 'update'])->name('menu.update');
 Route::get('/staff-menu', [MenuController::class, 'staffMenu'])->name('staff-menu');
 Route::get('/add-menu', [MenuController::class, 'addMenu'])->name('add-menu');

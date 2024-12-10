@@ -6,7 +6,7 @@
         <div class="col-md-4 mb-4">
             <div class="card text-center">
                 <div class="image-container">
-                    <img src="{{ asset('asset/default-image/no-image.jpg') }}" alt="Add Menu">
+                    <img src="{{ asset('asset/default-image/no-image.jpg') }}" class="card-img-top img-fluid" alt="Add Menu">
                 </div>
                 <div class="card-body">
                     <a href="{{ route('add-menu') }}" class="btn btn-primary">Add Menu</a>
@@ -35,7 +35,7 @@
                             <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
                             </form>
                         </div>
                     </div>
