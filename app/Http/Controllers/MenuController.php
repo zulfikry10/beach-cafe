@@ -50,17 +50,19 @@ public function store(Request $request)
         'name' => 'required',
         'price' => 'required|numeric',
         'status' => 'required|boolean',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Adjust validation rules if needed
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
     ]);
 
     $imageName = time() . '.' . $request->image->extension();
-    $request->image->storeAs('public/images', $imageName); // Using Storage facade to store image
+    $request->image->storeAs('public/images', $imageName);
+
+    $imagePath = asset('storage/images/' . $imageName); // Generate the full URL to the image
 
     Menu::create([
         'name' => $request->name,
         'price' => $request->price,
         'status' => $request->status,
-        'image_path' => 'images/' . $imageName,
+        'image_path' => $imagePath,
     ]);
 
     return redirect()->route('staff-menu')->with('success', 'Menu item added successfully.');

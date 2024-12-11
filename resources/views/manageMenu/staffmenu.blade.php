@@ -7,6 +7,9 @@
             <div class="card text-center">
                 <div class="image-container">
                     <img src="{{ asset('asset/default-image/no-image.jpg') }}" class="card-img-top img-fluid" alt="Add Menu">
+                    <h5 class="card-title">Menu Name</h5>
+                        <p class="card-text">Menu Price</p>
+                        <p class="card-text">Menu Status</p>
                 </div>
                 <div class="card-body">
                     <a href="{{ route('add-menu') }}" class="btn btn-primary">Add Menu</a>
