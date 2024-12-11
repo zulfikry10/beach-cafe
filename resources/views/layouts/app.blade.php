@@ -16,18 +16,19 @@
     @vite(['resources/css/app.css'])
 </head>
 <body >
-    {{-- @php
-        if ($user->role == 'Customer') {
+    @php
+    $user=Auth::user();
+        if ($user->role == 'customer') {
             $color = 'main-background-customer';
-        } elseif ($user->role == 'Staff') {
+        } elseif ($user->role == 'staff') {
             $color = 'main-background-staff';  
         }
-    @endphp --}}
+    @endphp
 
     <div>
         @include('layouts.navigation')
-        <div style="background-color: #1aa781">
-            <div class="d-flex justify-content-between align-items-center main-background-customer">
+        <div>
+            <div class="d-flex justify-content-between align-items-center {{ $color }}">
                 <div class="h1 fw-bold ms-5" style="font-family: 'Poller One', sans-serif;">BEACH CAFE</div>
                 <img style="width:300px; padding:50px;" class="main-img me-5" src="{{ asset('asset/default-image/beach-cafe.png') }}" alt="beach-cafe.png">
             </div>

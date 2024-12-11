@@ -1,0 +1,90 @@
+body {
+	background: #d9d9d9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	flex-direction: column;
+}
+
+*{
+	font-family: sans-serif;
+	box-sizing: border-box;
+}
+
+table{
+	width: 600px;
+    height: 350px;
+	border:  solid #ccc;
+	background: #d9d9d9;
+    border-radius: 10px;
+	table-layout: fixed;
+}
+td:nth-child(even)
+{
+    background: #1aa781;
+    text-align: center;
+    font-size: 18px;
+	border-radius: 10px;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 40px;
+    color: #1E1E1E;
+}
+
+.firstcolumn input, select {
+	border: 2px solid #ccc;
+	width: 95%;
+	padding: 10px;
+	margin: 0px 10px 10px 10px;
+	border-radius: 5px;
+}
+.firstcolumn label {
+	color: #1E1E1E;
+	font-size: 15px;
+	padding: 15px;
+}
+
+button {
+	background: #1aa781;
+	padding: 10px;
+	color: #fff;
+	border-radius: 5px;
+	margin: 10px;
+	border: none;
+    width: 95%;
+}
+button:hover{
+	opacity: .7;
+}
+
+
+h1 {
+	text-align: center;
+	color: #fff;
+}
+.green-button
+{
+    background-color: none;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 30px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+.green-button:hover
+{
+    background-color: #fff;
+    opacity: 0.7;
+    color: #1aa781;
+    border: 1px solid #fff;
+    border-radius: 30px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
