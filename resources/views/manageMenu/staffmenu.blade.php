@@ -2,85 +2,49 @@
 
 @section('content')
 <div class="container">
-  <h1>Manage Menu</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="image-container">
+                    <img src="{{ asset('asset/default-image/no-image.jpg') }}" class="card-img-top img-fluid" alt="Add Menu">
+                    <h5 class="card-title">Menu Name</h5>
+                        <p class="card-text">Menu Price</p>
+                        <p class="card-text">Menu Status</p>
+                </div>
+                <div class="card-body">
+                    <a href="{{ route('add-menu') }}" class="btn btn-primary">Add Menu</a>
+                </div>
+            </div>
+        </div>
 
-  <div class="d-flex justify-content-end mb-3">
-    <button type="button" class="btn btn-success" id="addMenuItemBtn">
-      <i class="fas fa-plus"></i> Add Menu Item
-    </button>
-  </div>
+        @if (session('success'))
+            <script>
+                alert("{{ session('success') }}");
+            </script>
+        @endif
 
-  <form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data" id="addMenuItemForm" style="display: none;">
-    @csrf
-
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" name="name" id="name" class="form-control" required>
+        @foreach ($menuItems as $item)
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <div class="image-container">
+                    <img src="{{ asset('asset/default-image/' . $item->image_path) }}" class="card-img-top img-fluid" alt="{{ $item->name }}">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $item->name }}</h5>
+                        <p class="card-text">RM {{ $item->price }}</p>
+                        <p class="card-text">Status: {{ $item->status ? 'Available' : 'Unavailable' }}</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
+                            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </div>
-
-    <div class="form-group">
-      <label for="price">Price:</label>
-      <input type="number" name="price" id="price" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-      <label for="image">Image:</label>
-      <input type="file" name="image" id="image" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-      <label for="status">Status:</label>
-      <select name="status" id="status" class="form-control">
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-      </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save Menu Item</button>
-    <button type="button" class="btn btn-secondary" id="cancelAddMenuItemBtn">Cancel</button>
-  </form>
-
-  <h2>Existing Menu Items</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach ($menuItems as $item)
-        <tr>
-          <td>{{ $item->name }}</td>
-          <td>RM {{ $item->price }}</td>
-          <td>{{ $item->status }}</td>
-          <td>
-            <a href="{{ route('menu.edit', $item->id) }}" class="btn btn-primary">Edit</a>
-            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-          </td>
-        </tr>
-      @endforeach
-    </tbody>
-  </table>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-$(document).ready(function() {
-  $('#addMenuItemBtn').click(function() {
-    $('#addMenuItemForm').show();
-  });
-
-  $('#cancelAddMenuItemBtn').click(function() {
-    $('#addMenuItemForm').hide();
-  });
-});
-</script>
 @endsection
