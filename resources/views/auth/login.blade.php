@@ -124,7 +124,7 @@ h1 {
         <div style="float: right; font-size: 15px; padding: 5px;">
             @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}">
-                    {{ __('Forgot password?') }}
+                    {{ __('Forgot password') }}
                 </a>
             @endif
 

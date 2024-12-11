@@ -122,8 +122,7 @@ h1 {
                                         name="password"
                                         required autocomplete="new-password" />
             
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
-            
+                        
                             <label for="role">Role</label>
                             <select name="role" id="role" required>
                                 <option value="customer">Customer</option>
