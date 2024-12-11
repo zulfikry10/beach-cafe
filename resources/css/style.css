@@ -22,7 +22,7 @@ table{
 }
 td:nth-child(even)
 {
-    background: #1aa781;
+    background: #37d48b;
     text-align: center;
     font-size: 18px;
 	border-radius: 10px;
@@ -36,7 +36,7 @@ h2 {
 
 .firstcolumn input, select {
 	border: 2px solid #ccc;
-	width: 95%;
+	width: 92%;
 	padding: 10px;
 	margin: 0px 10px 10px 10px;
 	border-radius: 5px;
@@ -48,13 +48,13 @@ h2 {
 }
 
 button {
-	background: #1aa781;
+	background: #37d48b;
 	padding: 10px;
 	color: #fff;
 	border-radius: 5px;
 	margin: 10px;
 	border: none;
-    width: 95%;
+    width: 92%;
 }
 button:hover{
 	opacity: .7;
@@ -80,7 +80,7 @@ h1 {
 {
     background-color: #fff;
     opacity: 0.7;
-    color: #1aa781;
+    color: #37d48b;
     border: 1px solid #fff;
     border-radius: 30px;
     padding: 10px 20px;

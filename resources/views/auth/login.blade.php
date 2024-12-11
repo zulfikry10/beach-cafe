@@ -20,14 +20,14 @@
                     
                 
         <!-- Remember Me -->
-        <div style="float: left; font-size: 15px; padding: 5px;">
+        <div style="float: left; font-size: 15px; padding-left: 10px">
             <label for="remember_me" >
                 <input id="remember_me" type="checkbox"  name="remember">
                 <span>Remember me</span>
             </label>
         </div>
 
-        <div style="float: right; font-size: 15px; padding: 5px;">
+        <div style="float: right; font-size: 15px; padding-right: 15px;">
             @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}">
                     {{ __('Forgot password') }}
