@@ -1,11 +1,9 @@
-/* customer */
-.main-background {
+.main-background-customer {
     margin-top: 70px;
     background-color: rgba(65, 131, 212, 1);
 }
 
-/* admin */
-.main-background {
+.main-background-staff {
     margin-top: 70px;
     background-color: rgb(168, 212, 65);
 }
@@ -26,6 +24,58 @@
 
 .fade-in {
     animation: fadeIn 1s ease-out;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(90deg, #1e3a8a, #2563eb);
+}
+
+.bg-gradient-green {
+    background: linear-gradient(90deg, #1e8a58, #25eb46);
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 0.75rem;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.4em 0.6em;
+}
+
+.star-rating {
+    display: inline-flex;
+    direction: rtl;
+}
+
+.star {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+input[type="radio"]:checked ~ label,
+input[type="radio"]:checked ~ label ~ label {
+    color: gold;
+}
+
+.star:hover,
+.star:hover ~ label {
+    color: #ffc107;
 }
 
 @keyframes fadeIn {

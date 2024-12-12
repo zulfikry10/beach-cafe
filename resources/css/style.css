@@ -1,0 +1,11 @@
+.image-container {
+    height: 30px; /* Adjust height as needed */
+    width: 30px;
+    overflow: hidden;
+}
+
+.card-img-top {
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+}
