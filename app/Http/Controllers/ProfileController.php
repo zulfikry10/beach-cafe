@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,11 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function viewListofUsers(): View
+    {
+        $users = User::where('id', '!=', Auth::id())->get();
+        return view('profile.index', ['users' => $users]);
+    }
     /**
      * Update the user's profile information.
      */
@@ -56,5 +62,13 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function deleteUser($id): RedirectResponse
+    {
+        $user=User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('profile.index');
     }
 }
