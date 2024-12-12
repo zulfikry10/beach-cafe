@@ -118,6 +118,21 @@
             background: #c82333;
         }
 
+        .back-btn {
+            background:darkgray;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: grey;
+        }
+
         
     </style>
 </head>
@@ -125,7 +140,7 @@
     <div class="container">
 
         <body>
-            <div class="cart-header shadow">My Cart</div>
+            <div class="cart-header shadow">Order Confirmation</div>
             <div class="card p-4 shadow">
 
                 <!-- Items -->
@@ -134,17 +149,6 @@
                         <img src="{{ asset('storage/food3.jpg') }}" alt="" style="width: 200px;">
                         <div class="cart-item-details">
                             <p class="cart-item-name">Nasi Lemak McD Set A x1</p>
-                            <div class="cart-item-quantity">
-                                <button class="minus">-</button>
-                                <input type="number" class="quantity-input" min="1" value="1">
-                                <button class="plus">+</button><br><br>
-                                <a href="">
-                                    <i class="fas fa-edit" style="padding-right:15px;color:blue"></i>
-                                </a>
-                                <a href="#" onclick="showDeleteConfirmation();">
-                                    <i class="fas fa-trash" style="padding-right:15px;color:rgb(255, 5, 5)"></i></a>
-
-                            </div>
                         </div>
                         <div class="cart-item-price">RM15.23</div>
                     </div>
@@ -152,18 +156,6 @@
                         <img src="{{ asset('storage/food3.jpg') }}" alt="" style="width: 200px;">
                         <div class="cart-item-details">
                             <p class="cart-item-name">Bubur Ayam McD™ x1</p>
-                            <div class="cart-item-quantity">
-                                <button class="minus">-</button>
-                                <input type="number" class="quantity-input" min="1" value="1">
-                                <button class="plus">+</button>
-
-                                <br><br>
-                                <a href="">
-                                    <i class="fas fa-edit" style="padding-right:15px;color:blue"></i>
-                                </a>
-                                <a href="#" onclick="showDeleteConfirmation();">
-                                    <i class="fas fa-trash" style="padding-right:15px;color:rgb(255, 5, 5)"></i></a>
-                            </div>
 
                         </div>
                         <p class="cart-item-price">RM25.49</p>
@@ -174,64 +166,12 @@
                     <div class="total">Total: RM40.35</div>
 
                     <div class="cart-footer">
-                        <button class="checkout-btn">Checkout</button>
+                        <button class="back-btn">Back</button>
+                        <button class="checkout-btn">Place Order</button>
                     </div>
                 </div>
 
             </div>
     </div>
     </div>
-    <script>
-        const plusButtons = document.querySelectorAll('.plus');
-        const minusButtons = document.querySelectorAll('.minus');
-        const quantityInputs = document.querySelectorAll('.quantity-input');
-
-        plusButtons.forEach((button, index) => {
-            button.addEventListener('click', () => {
-                const input = quantityInputs[index];
-                input.value = parseInt(input.value) + 1;
-            });
-        });
-
-        minusButtons.forEach((button, index) => {
-            button.addEventListener('click', () => {
-                const input = quantityInputs[index];
-                const currentValue = parseInt(input.value);
-                if (currentValue > 1) {
-                    input.value = currentValue - 1;
-                }
-            });
-        });
-    </script>
-
-
-    <!-- Padam Aduan Modal -->
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content ">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete Order Details ?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure want to delete this order details ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="" id="deleteLink" class="btn btn-danger">Delete</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--  End Padam Aduan Modal -->
-    <script>
-        function showDeleteConfirmation(deleteUrl) {
-            // Set the href attribute of the delete link in the modal
-            document.getElementById('deleteLink').href = deleteUrl;
-
-            // Show the delete confirmation modal
-            $('#deleteConfirmationModal').modal('show');
-        }
-    </script>
 @endsection
