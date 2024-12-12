@@ -10,8 +10,8 @@
             <tr>
                 <td>
                     <div class="firstcolumn">
-                        <label>User Name</label>
-                    <input type="text" name="email" placeholder="User Name">
+                        <label>Email</label>
+                    <input type="text" name="email" placeholder="Email">
     
                     <label>Password</label>
                     <input type="password" name="password" placeholder="Password">
@@ -23,13 +23,13 @@
         <div style="float: left; font-size: 15px; padding-left: 10px">
             <label for="remember_me" >
                 <input id="remember_me" type="checkbox"  name="remember">
-                <span>Remember me</span>
+                <span style="color: #37d48b">Remember me</span>
             </label>
         </div>
 
         <div style="float: right; font-size: 15px; padding-right: 15px;">
             @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}">
+                <a style="text-decoration: none; color: #1e1e1e" href="{{ route('password.request') }}">
                     {{ __('Forgot password') }}
                 </a>
             @endif
@@ -41,7 +41,7 @@
 
 
 
-                    <p>Already have an account?</p>
+                    <p>Don't have an account?</p>
                     <a class="green-button" href="{{ route('register') }}">Sign Up</a>
                 </td>
             </tr>

@@ -7,6 +7,7 @@
 
     <link rel="shortcut icon" href="{{ asset('asset/default-image/beach-cafe.png') }}" type="image/png">
 
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poller+One&display=swap" rel="stylesheet">
@@ -29,8 +30,14 @@
         @include('layouts.navigation')
         <div>
             <div class="d-flex justify-content-between align-items-center {{ $color }}">
-                <div class="h1 fw-bold ms-5" style="font-family: 'Poller One', sans-serif;">BEACH CAFE</div>
-                <img style="width:300px; padding:50px;" class="main-img me-5" src="{{ asset('asset/default-image/beach-cafe.png') }}" alt="beach-cafe.png">
+                <div class="h1 fw-bold ms-5" style="font-family: 'Poller One', sans-serif;">
+                    BEACH CAFE 
+                    <div style="font-weight:100; font-size:16px; font-family: 'Poppins';">
+                        Where great food meets the ocean breeze
+                    </div>
+                </div>
+                
+                <img class="main-img me-5" src="{{ asset('asset/default-image/beach-cafe.png') }}" alt="beach-cafe.png">
             </div>
             <div class="mt-4 ms-4 me-4">
                 @yield('content')
