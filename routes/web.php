@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -23,12 +24,18 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // User list management routes
     Route::get('/profile/list', [ProfileController::class, 'viewListofUsers'])->name('profile.index');
     Route::delete('/profile/list/delete/{id}', [ProfileController::class, 'deleteUser'])->name('profile.delete');
 
+    // Role editing routes
+    Route::get('/profile/list/edit-role/{id}', [ProfileController::class, 'editRole'])->name('profile.editRole');
+    Route::patch('/profile/list/edit-role/{id}', [ProfileController::class, 'updateRole'])->name('profile.updateRole'); // Changed name to avoid duplication
 });
 
 require __DIR__.'/auth.php';

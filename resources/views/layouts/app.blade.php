@@ -28,7 +28,7 @@
 
     <div>
         @include('layouts.navigation')
-        <div>
+        <div style="margin-bottom: 80px;">
             <div class="d-flex justify-content-between align-items-center {{ $color }}">
                 <div class="h1 fw-bold ms-5" style="font-family: 'Poller One', sans-serif;">
                     BEACH CAFE 

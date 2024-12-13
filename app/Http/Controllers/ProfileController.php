@@ -22,11 +22,32 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function viewListofUsers(): View
-    {
-        $users = User::where('id', '!=', Auth::id())->get();
-        return view('profile.index', ['users' => $users]);
+    public function viewListofUsers(Request $request): View
+{
+    // Start query excluding the logged-in user
+    $query = User::where('id', '!=', Auth::id());
+
+    // Filter by role if provided
+    if ($request->filled('role')) {
+        $query->where('role', $request->role);
     }
+
+    // Search by name or email if provided
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'LIKE', "%{$search}%")
+              ->orWhere('email', 'LIKE', "%{$search}%");
+        });
+    }
+
+    // Fetch the filtered users
+    $users = $query->get();
+
+    return view('profile.index', ['users' => $users]);
+}
+
+
     /**
      * Update the user's profile information.
      */
@@ -64,11 +85,37 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
+    // delete users data
     public function deleteUser($id): RedirectResponse
-    {
-        $user=User::findOrFail($id);
-        $user->delete();
+{
+    $user = User::findOrFail($id);
 
-        return redirect()->route('profile.index');
+    try {
+        $user->delete();
+        return redirect()->route('profile.index')->with('success', 'User deleted successfully.');
+    } catch (\Exception $e) {
+        return redirect()->route('profile.index')->with('error', 'Failed to delete user.');
     }
+}
+
+
+    public function editRole($id): View
+{
+    $user = User::findOrFail($id);
+    return view('profile.edit-role', ['user' => $user]);
+}
+
+public function updateRole(Request $request, $id): RedirectResponse
+{
+    $request->validate([
+        'role' => 'required|in:staff,customer',
+    ]);
+
+    $user = User::findOrFail($id);
+    $user->role = $request->role;
+    $user->save();
+
+    return redirect()->route('profile.index')->with('success', 'User role updated successfully.');
+}
+
 }

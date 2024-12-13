@@ -9,7 +9,7 @@
     <table>
         <tr>
             <td>
-                <form method="POST" action="{{ route('password.email') }}">
+                {{-- <form method="POST" action="{{ route('password.email') }}"> --}}
                     @csrf
             
                     <!-- Email Address -->

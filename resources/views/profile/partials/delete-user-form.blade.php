@@ -15,9 +15,16 @@
         @method('delete')
 
         <!-- Password Input -->
-        <div>
+        <div class="mb-4">
             <label for="password" class="form-label">{{ __('Password') }}</label>
-            <input id="password" name="password" type="password" class="form-control" placeholder="{{ __('Enter your password to confirm') }}" required>
+            <input 
+                id="password" 
+                name="password" 
+                type="password" 
+                class="form-control" 
+                placeholder="{{ __('Enter your password to confirm') }}" 
+                required
+            >
             @if ($errors->userDeletion->get('password'))
                 <div class="text-danger mt-2">
                     {{ $errors->userDeletion->get('password')[0] }}
@@ -26,7 +33,7 @@
         </div>
 
         <!-- Submit Button -->
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content">
             <button type="submit" class="btn btn-danger">
                 {{ __('Delete Account') }}
             </button>
