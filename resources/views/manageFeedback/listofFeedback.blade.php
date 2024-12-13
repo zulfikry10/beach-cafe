@@ -64,12 +64,25 @@
                                         </a>
                                     
                                     @if ($user->role == 'Customer')
-                                        <form action="{{ route('delete_feedback', ['id' => $feedback->id]) }}" method="post">
+                                        <a href="{{ route('edit_feedback_details', ['id' => $feedback->id]) }}" class="btn btn-sm btn-outline-warning me-1">
+                                            <i class="bi bi-eye"></i> Edit
+                                        </a>
+                                        
+                                        <form action="{{ route('delete_feedback', ['id' => $feedback->id]) }}" method="post" onsubmit="return confirmDelete()">
                                             @csrf
                                             @method('DELETE')
-
-                                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Delete</button>
+                                        
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
                                         </form>
+                                        
+                                        <script>
+                                            function confirmDelete() {
+                                                return confirm("Are you sure you want to delete this feedback?");
+                                            }
+                                        </script>
+                                        
                                     @endif
 
                                     </div>

@@ -6,6 +6,7 @@ use App\Models\Feedback;
 use App\Models\Menu;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -52,6 +53,14 @@ class FeedbackController extends Controller
         ]);
     }
 
+    public function viewEditFeedback($id): View {
+        $feedback = Feedback::findOrFail($id);
+
+        return view('manageFeedback.editFeedback', [
+            'feedback' => $feedback,
+        ]);
+    }
+
     public function createFeedback(Request $request) {
         $request->validate([
             'user_id' => ['required', 'exists:users,id'],
@@ -70,6 +79,25 @@ class FeedbackController extends Controller
         ]);
 
         return redirect()->route('view_add_Feedback', ['menu_id' => $request->menu_id])->with('blue-message', 'Thank you for your feedback!');
+    }
+
+    public function updateFeedback(Request $request, $id): RedirectResponse {
+        $request->validate([
+            'comment' => ['required', 'string', 'max:255'],
+            'rating' => ['required', 'integer'],
+            'date' => ['required', 'date'],
+        ]);
+
+        $feedback =  Feedback::findOrFail($id);
+
+        $feedback->update([
+            'comment' => $request->input('comment'),
+            'rating' => $request->input('rating'),
+            'date' => $request->input('date'),
+            'user_id' => $feedback->user_id,
+            'menu_id' => $feedback->menu_id,
+        ]);
+        return redirect()->route('view_feedback_details', ['id' => $feedback->id])->with('blue-message', 'Successfully Update Feedback');
     }
 
     public function deleteFeedback($id) {
