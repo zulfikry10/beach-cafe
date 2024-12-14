@@ -23,10 +23,19 @@
                         <div class="form-group">
                             <label for="status">Status:</label>
                             <select name="status" id="status" class="form-control">
-                                <option value="1">Available</option>
-                                <option value="0">Unavailable</option>
+                                <option value="Available">Available</option>
+                                <option value="Unavailable">Unavailable</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select name="category" id="category" class="form-control">
+                      <option value="Side Dish">Side Dish</option>
+                      <option value="Drink">Drink</option>
+                      <option value="Food">Food</option>
+                    </select>
+                  </div>
+                  <br>
                         <div class="form-group">
                             <label for="image">Image:</label>
                             <input type="file" name="image" id="image" class="form-control" required>

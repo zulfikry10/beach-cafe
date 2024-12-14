@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 
 use App\Models\Menu;
@@ -10,116 +11,76 @@ class MenuController extends Controller
     public function index()
     {
         $menuItems = Menu::all();
+
         return view('manageMenu.menu', compact('menuItems'));
     }
+
     public function staffMenu()
-{
-    $menuItems = Menu::all();
-    return view('manageMenu.staffmenu', compact('menuItems'));
-}
-public function show(Menu $menu)
-{
-    return view('manageMenu.viewmenu', compact('menu'));
-}
+    {
+        $menuItems = Menu::all();
 
-public function update(Request $request, Menu $menu)
-{
-    $request->validate([
-        'name' => 'required',
-        'price' => 'required|numeric',
-        'status' => 'required|boolean',
-    ]);
+        return view('manageMenu.staffmenu', compact('menuItems'));
+    }
 
-    $menu->update([
-        'name' => $request->name,
-        'price' => $request->price,
-        'status' => $request->status,
-    ]);
+    public function show(Menu $menu)
+    {
+        return view('manageMenu.viewmenu', compact('menu'));
+    }
 
-    return redirect()->route('staff-menu')->with('success', 'Menu item updated successfully.');
-}
+    public function update(Request $request, Menu $menu)
+    {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'status' => 'required|string',
+            'category' => 'required',
+        ]);
 
-public function addMenu()
-{
-    return view('manageMenu.addmenu');
-}
+        $menu->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'status' => $request->status,
+            'category' => $request->category,
+        ]);
 
-// public function store(Request $request)
-// {
-//     $request->validate([
-//         'name' => 'required',
-//         'price' => 'required|numeric',
-//         'status' => 'required|boolean',
-//         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-//     ]);
+        return redirect()->route('staff-menu')->with('success', 'Menu item updated successfully.');
+    }
 
-//     $imageName = time() . '.' . $request->image->extension();
-//     $request->image->storeAs('public/images', $imageName);
-
-//     $imagePath = asset('images/' . $imageName); // Generate the full URL to the image
-
-//     Menu::create([
-//         'name' => $request->name,
-//         'price' => $request->price,
-//         'status' => $request->status,
-//         'image_path' => $imagePath,
-//     ]);
-
-//     return redirect()->route('staff-menu')->with('success', 'Menu item added successfully.');
-// }
-
-// public function store(Request $request)
-// {
-//     $request->validate([
-//         'name' => 'required',
-//         'price' => 'required|numeric',
-//         'status' => 'required|boolean',
-//         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-//     ]);
-
-//     $imageName = time() . '.' . $request->image->extension();
-//     $request->image->storeAs('public', $imageName);
-
-//     Menu::create([
-//         'name' => $request->name,
-//         'price' => $request->price,
-//         'status' => $request->status,
-//         'image_path' => 'storage/images/' . $imageName, // Store relative path
-//     ]);
-
-//     return redirect()->route('staff-menu')->with('success', 'Menu item added successfully.');
-// }
-
-public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required',
-        'price' => 'required|numeric',
-        'status' => 'required|boolean',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-    ]);
-
-    $imageName = time() . '.' . $request->image->extension();
-    $request->image->storeAs('public/images', $imageName);
-
-    Menu::create([
-        'name' => $request->name,
-        'price' => $request->price,
-        'status' => $request->status,
-        'image_path' => $imageName, // Only store the file name
-    ]);
-
-    return redirect()->route('staff-menu')->with('success', 'Menu item added successfully.');
-}
-
-
-public function destroy(Menu $menu)
-{
-    $menu->delete();
-
-    return redirect()->route('staff-menu')->with('success', 'Menu item deleted successfully.');
-}
-
-
+    public function addMenu()
+    {
+        return view('manageMenu.addmenu');
+    }
     
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'status' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'category' => 'required|string|max:255',
+        ]);
+
+        $imageName = time() . '.' . $request->image->extension(); // You can customize this to include other parts of the name
+        $request->image->move(public_path('asset/default-image'), $imageName); // Save the file in the "public/images" directory
+
+        // Save the data to the database, including the image file name/path
+        Menu::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'status' => $request->status,
+            'image_path' => $imageName, // Store file name in the database
+            'category' => $request->category,
+        ]);
+
+        return redirect()->route('staff-menu')->with('success', 'Menu item added successfully.');
+    }
+
+
+    public function destroy(Menu $menu)
+    {
+        $menu->delete();
+
+        return redirect()->route('staff-menu')->with('success', 'Menu item deleted successfully.');
+    }
 }
