@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\MenuController;
+use App\Models\Feedback;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +40,14 @@ Route::middleware('auth')->group(function () {
     // Role editing routes
     Route::get('/profile/list/edit-role/{id}', [ProfileController::class, 'editRole'])->name('profile.editRole');
     Route::patch('/profile/list/edit-role/{id}', [ProfileController::class, 'updateRole'])->name('profile.updateRole'); // Changed name to avoid duplication
+  
+  Route::get('/list_of_feedback/{id}', [FeedbackController::class, 'viewListOFeedback'])->name('view_all_feedback');
+  Route::get('/add_feedback/{menu_id}', [FeedbackController::class, 'viewAddFeedback'])->name('view_add_Feedback');
+  Route::post('/add_feedback/create', [FeedbackController::class, 'createFeedback'])->name('create_feedback');
+  Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/dummydisplay', [FeedbackController::class, 'displaydummy'])->name('dummydisplay');
+
