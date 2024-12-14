@@ -11,7 +11,7 @@
 }
 
 .card {
-    height: 300px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
 }
 
 .add-menu-btn {
@@ -21,3 +21,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.menu-image {
+    max-width: 50%; /* Ensures image doesn't overflow container */
+    height: auto;       /* Maintains aspect ratio */
+  }
