@@ -1,6 +1,7 @@
 {{-- @extends('layouts.app')
 
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 @section('content')
@@ -95,6 +96,28 @@
 @section('content')
     <div class="container mt-4">
         <h2 class="text-center mb-4">Our Menu</h2>
+
+        <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="image-container">
+                    <img src="{{ asset('asset/default-image/no-image.jpg') }}" class="card-img-top img-fluid" alt="Add Menu">
+                    <h5 class="card-title">Name</h5>
+                        <p class="card-text">Price</p>
+                        <p class="card-text">Status</p>
+                </div>
+                <div class="card-body">
+                    <a href="{{ route('add-menu') }}" class="btn btn-primary">Add Menu</a>
+                </div>
+            </div>
+        </div>
+
+        @if (session('success'))
+            <script>
+                alert("{{ session('success') }}");
+            </script>
+        @endif
 
         <!-- Drinks Section -->
         <div class="category-title">Drinks</div>

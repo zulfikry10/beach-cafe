@@ -32,7 +32,7 @@ class MenuController extends Controller
         $request->validate([
             'name' => 'required',
             'price' => 'required|numeric',
-            'status' => 'required|boolean',
+            'status' => 'required|string',
             'category' => 'required',
         ]);
 
@@ -56,8 +56,8 @@ class MenuController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'status' => 'required|boolean',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'category' => 'required|string|max:255',
         ]);
 

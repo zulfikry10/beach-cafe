@@ -33,8 +33,8 @@
                   <div class="form-group">
                     <label for="status">Status:</label>
                     <select name="status" id="status" class="form-control">
-                      <option value="1" {{ $menu->status ? 'selected' : '' }}>Available</option>
-                      <option value="0" {{ !$menu->status ? 'selected' : '' }}>Unavailable</option>
+                      <option value="Available" {{ $menu->status ? 'selected' : '' }}>Available</option>
+                      <option value="Unavailable" {{ !$menu->status ? 'selected' : '' }}>Unavailable</option>
                     </select>
                   </div>
                   <div class="form-group">
