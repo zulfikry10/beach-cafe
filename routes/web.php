@@ -6,6 +6,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InventoryController;
 
 
 /*
@@ -55,6 +56,14 @@ Route::get('/feedback_details/{id}', [FeedbackController::class, 'viewFeedbackDe
 Route::get('/edit_feedback_details/{id}', [FeedbackController::class, 'viewEditFeedback'])->name('edit_feedback_details');
 Route::get('/add_feedback/{menu_id}', [FeedbackController::class, 'viewAddFeedback'])->name('view_add_Feedback');
 Route::post('/add_feedback/create', [FeedbackController::class, 'createFeedback'])->name('create_feedback');
+
+// inventory
+Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+Route::post('/inventory/update', [InventoryController::class, 'update'])->name('inventory.update');
+// Route for filtering inventory data
+Route::get('/inventory/filter', [InventoryController::class, 'filter'])->name('inventory.filter');
+Route::middleware('auth')->group(function () {
+});
 
 //customer menu
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
