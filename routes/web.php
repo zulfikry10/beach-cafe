@@ -53,6 +53,16 @@ Route::get('/feedback_details/{id}', [FeedbackController::class, 'viewFeedbackDe
 Route::get('/edit_feedback_details/{id}', [FeedbackController::class, 'viewEditFeedback'])->name('edit_feedback_details');
 Route::get('/add_feedback/{menu_id}', [FeedbackController::class, 'viewAddFeedback'])->name('view_add_Feedback');
 Route::post('/add_feedback/create', [FeedbackController::class, 'createFeedback'])->name('create_feedback');
+
+//   MODULE MENU
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+Route::get('/staff-menu', [MenuController::class, 'staffMenu']);
+Route::get('/menu/{menu}', [MenuController::class, 'show'])->name('menu.show');
+Route::delete('/menu/{menu}', [MenuController::class, 'destroy'])->name('menu.destroy');
+Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
+Route::put('/menu/{menu}', [MenuController::class, 'update'])->name('menu.update');
+Route::get('/staff-menu', [MenuController::class, 'staffMenu'])->name('staff-menu');
+Route::get('/add-menu', [MenuController::class, 'addMenu'])->name('add-menu');
 Route::patch('/update_feedback/feedback/{id}', [FeedbackController::class, 'updateFeedback'])->name('update_feedback');
 Route::delete('/delete_feedback/{id}', [FeedbackController::class, 'deleteFeedback'])->name('delete_feedback');
 });

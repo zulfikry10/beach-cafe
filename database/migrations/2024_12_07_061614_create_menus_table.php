@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->double('price');
             $table->string('status');
+            $table->string('category');
+            $table->string('image_path');
             $table->timestamps();
         });
     }

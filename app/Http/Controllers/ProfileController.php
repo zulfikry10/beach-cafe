@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,7 +47,6 @@ class ProfileController extends Controller
 
     return view('profile.index', ['users' => $users]);
 }
-
 
     /**
      * Update the user's profile information.
@@ -117,5 +117,4 @@ public function updateRole(Request $request, $id): RedirectResponse
 
     return redirect()->route('profile.index')->with('success', 'User role updated successfully.');
 }
-
 }
