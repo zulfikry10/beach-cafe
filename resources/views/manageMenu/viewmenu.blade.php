@@ -15,8 +15,12 @@
               @csrf
               @method('PUT')
               <div class="row">
+                <!-- Image Column -->
                 <div class="col-md-4">
-                <img src="data:image/jpeg;base64,{{ base64_encode($menu->picture) }}" alt="{{ $menu->name }}" class="card-img-top img-fluid">  </div>
+                  <img src="{{ asset('asset/default-image/' . $menu->image_path) }}" alt="{{ $menu->name }}" class="card-img-top img-fluid">
+                </div>
+
+                <!-- Form Inputs Column -->
                 <div class="col-md-8">
                   <div class="form-group">
                     <label for="name">Name:</label>
@@ -33,11 +37,20 @@
                       <option value="0" {{ !$menu->status ? 'selected' : '' }}>Unavailable</option>
                     </select>
                   </div>
+                  <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select name="category" id="category" class="form-control">
+                      <option value="Side Dish" {{ $menu->category == 'Side Dish' ? 'selected' : '' }}>Side Dish</option>
+                      <option value="Drink" {{ $menu->category == 'Drink' ? 'selected' : '' }}>Drink</option>
+                      <option value="Food" {{ $menu->category == 'Food' ? 'selected' : '' }}>Food</option>
+                    </select>
+                  </div>
+                  <br>
+                  <!-- Submit Button -->
+                  <button type="submit" class="btn btn-primary">Save</button>
+                  <a href="{{ route('staff-menu') }}" class="btn btn-secondary">Back</a>
                 </div>
               </div>
-
-              <button type="submit" class="btn btn-primary">Save</button>
-              <a href="{{ route('staff-menu') }}" class="btn btn-secondary">Back</a>
             </form>
           </div>
         </div>
@@ -59,6 +72,7 @@
     </div>
   @endif
 
+  <!-- Confirmation Script -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script>
     $(document).ready(function() {

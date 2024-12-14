@@ -12,11 +12,6 @@ class MenuController extends Controller
     {
         $menuItems = Menu::all();
 
-        foreach ($menuItems as $menuItem) {
-            if ($menuItem->picture) {
-                $menuItem->picture = 'data:image/jpeg;base64,' . base64_encode($menuItem->picture);
-            }
-        }
         return view('manageMenu.menu', compact('menuItems'));
     }
 
@@ -24,16 +19,8 @@ class MenuController extends Controller
     {
         $menuItems = Menu::all();
 
-        foreach ($menuItems as $menuItem) {
-            if ($menuItem->picture) {
-                $menuItem->picture = 'data:image/jpeg;base64,' . base64_encode($menuItem->picture);
-            }
-        }
-
         return view('manageMenu.staffmenu', compact('menuItems'));
     }
-
-
 
     public function show(Menu $menu)
     {
@@ -46,12 +33,14 @@ class MenuController extends Controller
             'name' => 'required',
             'price' => 'required|numeric',
             'status' => 'required|boolean',
+            'category' => 'required',
         ]);
 
         $menu->update([
             'name' => $request->name,
             'price' => $request->price,
             'status' => $request->status,
+            'category' => $request->category,
         ]);
 
         return redirect()->route('staff-menu')->with('success', 'Menu item updated successfully.');
@@ -61,7 +50,7 @@ class MenuController extends Controller
     {
         return view('manageMenu.addmenu');
     }
-
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -69,17 +58,19 @@ class MenuController extends Controller
             'price' => 'required|numeric',
             'status' => 'required|boolean',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category' => 'required|string|max:255',
         ]);
 
-        // Convert the uploaded image to binary data
-        $imageBinary = file_get_contents($request->file('image')->getRealPath());
+        $imageName = time() . '.' . $request->image->extension(); // You can customize this to include other parts of the name
+        $request->image->move(public_path('asset/default-image'), $imageName); // Save the file in the "public/images" directory
 
-        // Save the data to the database
+        // Save the data to the database, including the image file name/path
         Menu::create([
             'name' => $request->name,
             'price' => $request->price,
             'status' => $request->status,
-            'picture' => $imageBinary, // Store binary image data in LONG BLOB column
+            'image_path' => $imageName, // Store file name in the database
+            'category' => $request->category,
         ]);
 
         return redirect()->route('staff-menu')->with('success', 'Menu item added successfully.');
