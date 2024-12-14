@@ -1,3 +1,34 @@
+{{-- @extends('layouts.app')
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            @foreach ($menuItems as $item)
+                <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;">
+                    <i class="fas fa-edit" style="padding-right:15px;color:blue"></i>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card text-center">
+                            <div class="image-container">
+                                <img src="{{ asset('storage/images/' . $item->image_path) }}" class="card-img-top img-fluid"
+                                    alt="{{ $item->name }}">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $item->name }}</h5>
+                                <p class="card-text">RM {{ $item->price }}</p>
+                                <p class="card-text">Status: {{ $item->status}} </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+    </div>
+@endsection --}}
+
 @extends('layouts.app')
 
 <head>
@@ -66,11 +97,10 @@
         <h2 class="text-center mb-4">Our Menu</h2>
 
         <!-- Drinks Section -->
-        <div class="category-title">Drinks</div>
+        <div class="category-title">Drinks</div><br><br>
         <div class="row">
             @foreach ($menuItems as $item)
-            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;" class="d-block">
-
+            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;">
                 @if ($item->category === 'Drink')
                     <div class="col-md-4 mb-4">
                         <div class="card text-center">
@@ -91,11 +121,10 @@
         </div>
 
         <!-- Food Section -->
-        <div class="category-title">Food</div>
+        <div class="category-title">Food</div><br><br>
         <div class="row">
             @foreach ($menuItems as $item)
-            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;" class="d-block">
-
+            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;">
                 @if ($item->category === 'Food')
                     <div class="col-md-4 mb-4">
                         <div class="card text-center">
@@ -116,11 +145,10 @@
         </div>
 
         <!-- Side Dish Section -->
-        <div class="category-title">Side Dish</div>
+        <div class="category-title">Side Dish</div><br><br>
         <div class="row">
             @foreach ($menuItems as $item)
-            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;" class="d-block">
-
+            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;">
                 @if ($item->category === 'Side Dish')
                     <div class="col-md-4 mb-4">
                         <div class="card text-center">

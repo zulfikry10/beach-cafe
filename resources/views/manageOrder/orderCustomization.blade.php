@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
 @section('content')
     <style>
+
         .back-btn {
             margin-top: 70px;
             background: darkgray;
@@ -39,7 +44,7 @@
                         <img src="{{ asset('storage/images/' . $menu->image_path) }}" alt="{{ $menu->name }}"
                             style="width: 300px;">
                     </div>
-                    <div class="col-md-8" style="width:100%; margin-left:100px;">
+                    <div class="col-md-8">
 
                         <h3>{{ $menu->name }}</h3>
 
