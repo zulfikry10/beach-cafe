@@ -321,22 +321,65 @@ class OrderController extends Controller
 
     public function showHistory()
     {
-        // $userId = 2; // Replace with the authenticated user's ID, e.g., `auth()->id()`
-    
-        // // Query orders by user_id and eager load related items and menus
-        // $orders = Order::where('user_id', $userId)
-        //     ->with(['items.menu']) // Eager load items and their related menu
-        //     ->get();
-    
-        // // Check if no orders are found
-        // if ($orders->isEmpty()) {
-        //     return redirect()->route('order.cart')->with('error', 'No orders found for this user.');
-        // }
-    
-        // Return the view with orders
-        return view('manageOrder.orderHistory');
+        $userId = 2; // Get the authenticated user's ID
+
+        // Fetch orders with their items and related menu data
+        $orders = Order::where('user_id', $userId)
+            ->with('items.menu') // Eager load items and menus
+            ->get();
+
+        // Redirect if no orders are found
+        if ($orders->isEmpty()) {
+            return redirect()->route('order.cart')->with('error', 'No orders found.');
+        }
+
+        // Pass the orders to the view
+        return view('manageOrder.orderHistory', compact('orders'));
     }
-    
+
+    public function reorder(Request $request, $orderId)
+    {
+        // Find the original order
+        $originalOrder = Order::with('items.menu')->findOrFail($orderId);
+
+        // Create a new order for the user
+        $newOrder = Order::create([
+            'user_id' => 2, // Get the logged-in user's ID
+            'order_status' => 'Success', // Set default status
+            'order_total' => $originalOrder->items->sum(fn($item) => $item->order_quantity * $item->menu->price),
+            'order_date' => now(),
+            'order_time' => now(),
+        ]);
+
+
+        // Clone the items from the original order to the new order
+        foreach ($originalOrder->items as $item) {
+            OrderItems::create([
+                'order_id' => $newOrder->id,
+                'menu_id' => $item->menu_id,
+                'order_portion' => $item->order_portion,
+                'order_quantity' => $item->order_quantity,
+                'order_remark' => $item->order_remark,
+                'price' => $item->menu->price,
+            ]);
+        }
+
+        // Redirect back with a success message
+        return redirect()->route('order.history')->with('success', 'Order has been successfully reordered!');
+    }
+
+    public function reorderDestroy($id)
+    {
+        $order = Order::findOrFail($id);
+        if ($order) {
+            $order->delete();
+        }
+
+        return redirect()->route('order.history')->with('success', 'Order deleted successfully.');
+    }
+
+
+
 
 
     // In your controller (e.g., OrderController)

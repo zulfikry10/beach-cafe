@@ -55,11 +55,10 @@ Route::get('/order-status/{orderId}', [OrderController::class, 'orderStatus'])->
 Route::get('/editCart/{order}', [OrderController::class, 'updateCustomization'])->name('order.edit');
 Route::put('/order/{order}', [OrderController::class, 'update'])->name('order.update');
 
+Route::get('/order-history', [OrderController::class, 'showHistory'])->name('order.history');
+Route::post('/reorder/{order}', [OrderController::class, 'reorder'])->name('order.reorder');
+Route::delete('/reorders/{order}', [OrderController::class, 'reorderDestroy'])->name('reorder.delete');
 
 
 
-
-
-
-Route::get('/orderHistory', [OrderController::class, 'showHistory'])->name('order.history');
 
