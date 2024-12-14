@@ -19,9 +19,9 @@ class FeedbackController extends Controller
     public function viewListOFeedback($id): View {
         $user = User::findOrFail($id);
 
-        if ($user->role === 'Customer') {
+        if ($user->role === 'customer') {
             $feedbacks = Feedback::where('user_id', $user->id)->get();
-        } elseif ($user->role === 'Staff') {
+        } elseif ($user->role === 'staff') {
             $feedbacks = Feedback::all();
         }
 

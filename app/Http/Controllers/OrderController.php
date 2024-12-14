@@ -7,18 +7,18 @@ use App\Models\OrderItems;
 use App\Models\Menu;
 use Illuminate\View\View; //provider for add to cart function
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
     //show order customization
     public function showCustomization($application)
     {
-        $menus = Menu::where('id', $application)->get(); // Use get() to return a collection, even if it's a single record
+        $menu = Menu::findOrFail($application); // Use get() to return a collection, even if it's a single record
         // $datas = Menu::All()->find($application);
         // $data = Ticket::with('location')->find($application);
-        // dd($datas);
-        return view('manageOrder.orderCustomization', compact('menus'));
+        // dd($menu);
+        return view('manageOrder.orderCustomization', compact('menu'));
     }
 
     //show update customization
@@ -55,38 +55,48 @@ class OrderController extends Controller
     //store order to cart
     // dd($request->all());
     public function storeToCart(Request $request)
-    {
+{
+    $validated = $request->validate([
+        'menu_id' => 'required|exists:menus,id', // Ensure menu item exists
+        'order_quantity' => 'required|integer|min:1',
+        'order_portion' => 'nullable|string',
+        'order_remark' => 'nullable|string',
+        'order_total' => 'nullable|string',
+    ]);
 
-        $validated = $request->validate([
-            'menu_id' => 'required|exists:menus,id', // Ensure menu item exists
-            'order_quantity' => 'required|integer|min:1',
-            'order_portion' => 'nullable|string',
-            'order_remark' => 'nullable|string',
-            'order_total' => 'nullable|string',
+    // Check if an active order exists for the user
+    $userId = Auth::id(); // Assuming the user is authenticated
+    $order = Order::firstOrCreate(
+        ['user_id' => $userId, 'order_status' => 'pending'],
+        ['order_date' => now(), 'order_time' => now(), 'order_total' => 0]
+    );
+
+    try {
+        // Find the menu item and calculate the total price
+        $menu = Menu::findOrFail($validated['menu_id']);
+        $totalPrice = $menu->price * $validated['order_quantity'];
+
+        // Create order item
+        OrderItems::create([
+            'menu_id' => $validated['menu_id'],
+            'order_id' => $order->id,
+            'order_quantity' => $validated['order_quantity'],
+            'order_portion' => $validated['order_portion'],
+            'order_remark' => $validated['order_remark'],
         ]);
 
-        // Check if an active order exists for the user
-        $userId = 2; // Assuming the user is authenticated
-        $order = Order::firstOrCreate(
-            ['user_id' => $userId, 'order_status' => 'pending', 'order_total' => '0'],
-            ['order_date' => now(), 'order_time' => now()]
-        );
+        // Update the order total
+        $order->order_total += $totalPrice;
+        $order->save();
 
-        try {
-            OrderItems::create([
-                'menu_id' => $validated['menu_id'],
-                'order_id' => $order->id,
-                'order_quantity' => $validated['order_quantity'],
-                'order_portion' => $validated['order_portion'],
-                'order_remark' => $validated['order_remark'],
-            ]);
-            // This should output the inserted data
-        } catch (\Exception $e) {
-            dd($e->getMessage()); // Capture any exceptions
-        }
-        // return redirect()->route('cartList')->with('success', 'Menu item added successfully.');
-        return redirect()->back()->with('success', 'Successfully Add to Cart.');
+        return redirect()->back()->with('success', 'Successfully Added to Cart.');
+    } catch (\Exception $e) {
+        // Log the error and return a user-friendly message
+        return redirect()->back()->withErrors('Something went wrong. Please try again.');
     }
+}
+
+
 
     //show cart list
     public function showCartList()

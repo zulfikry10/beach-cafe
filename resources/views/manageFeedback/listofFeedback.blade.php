@@ -2,9 +2,9 @@
 
 @section('content')
     @php
-        if ($user->role == 'Customer') {
+        if ($user->role == 'customer') {
             $color = 'bg-primary';
-        } elseif ($user->role == 'Staff') {
+        } elseif ($user->role == 'staff') {
             $color = 'bg-success';  
         }
     @endphp
@@ -63,7 +63,7 @@
                                             <i class="bi bi-eye"></i> View
                                         </a>
                                     
-                                    @if ($user->role == 'Customer')
+                                    @if ($user->role == 'customer')
                                         <a href="{{ route('edit_feedback_details', ['id' => $feedback->id]) }}" class="btn btn-sm btn-outline-warning me-1">
                                             <i class="bi bi-eye"></i> Edit
                                         </a>

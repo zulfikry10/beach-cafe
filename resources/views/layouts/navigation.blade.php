@@ -7,9 +7,9 @@
     <div style="display: flex; align-items: center;">
         <!-- Common links for all users -->
         <a class="navbar-brand" href="{{ route('dashboard') }}" style="margin-right: 15px;">Home</a>
-        <a class="navbar-brand" href="" style="margin-right: 15px;">Menu</a>
-        <a class="navbar-brand" href="" style="margin-right: 15px;">Feedback</a>
-        <a class="navbar-brand" href="" style="margin-right: 15px;">Order</a>
+        <a class="navbar-brand" href="{{ route('menu') }}" style="margin-right: 15px;">Menu</a>
+        <a class="navbar-brand" href="{{ route('view_all_feedback', ['id' => Auth::id()]) }}" style="margin-right: 15px;">Feedback</a>
+        <a class="navbar-brand" href="{{ route('inventory.index') }}" style="margin-right: 15px;">Inventory</a>
 
         <!-- Links only visible to staff -->
         @if(Auth::user()->role === 'staff')

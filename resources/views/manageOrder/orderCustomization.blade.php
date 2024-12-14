@@ -33,15 +33,13 @@
         <h2 class="text-center mb-4">Customize Your Order</h2>
         <form action="{{ route('order.store') }}" method="POST">
             @csrf
-        @foreach ($menus as $menu)
         
-        <input type="hidden" name="menu_id" value="{{ $menu->id }}">
             <div class="card p-4 shadow">
                 <!-- Menu Item Details -->
                 <div class="row">
                     <div class="col-md-4">
                         {{-- asset specificallly use to include javacript, css and file  but need to be store in ppublic directory. Other way can use URL --}}
-                        <img src="{{ asset('storage/images/' . $menu->image_path) }}" alt="{{ $menu->name }}"
+                        <img src="{{ asset('asset/default-image/' . $menu->image_path) }}" alt="{{ $menu->name }}"
                             style="width: 300px;">
                     </div>
                     <div class="col-md-8">
@@ -86,7 +84,6 @@
 
                 </div>
             </div>
-        @endforeach
 
         <div class="cart-footer">
             <button class="back-btn" onclick="history.back()">Back</button>

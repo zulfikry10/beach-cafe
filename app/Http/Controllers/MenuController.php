@@ -6,8 +6,18 @@ use Illuminate\Http\Request;
 
 use App\Models\Menu;
 
+
 class MenuController extends Controller
 {
+
+    public function dashboardMenu() {
+        $menuItems = Menu::all();
+
+        return view('dashboard', [
+            'menuItems' => $menuItems,
+        ]);
+    }
+
     public function index()
     {
         $menuItems = Menu::all();

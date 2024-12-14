@@ -109,12 +109,25 @@
                 <div class="col-md-4 mb-4">
                     <div class="card text-center">
                         <div class="image-container">
-                            <img src="{{ asset('storage/images/' . $item->image_path) }}" class="card-img-top img-fluid" alt="{{ $item->name }}">
+                            <a href="{{route('customize.order', ['menu' => $item->id])}}" style="text-decoration: none;">
+                                <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
+                            </a>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $item->name }}</h5>
                             <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
                             <p class="card-text">Status: {{ $item->status }}</p>
+                            <div class="d-flex justify-content-center">
+                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
+                            </form>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="{{ route('view_add_Feedback', ['menu_id' => $menu->id ?? 6]) }}" class="btn btn-primary me-3">Add Feedback</a>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -130,12 +143,25 @@
                 <div class="col-md-4 mb-4">
                     <div class="card text-center">
                         <div class="image-container">
-                            <img src="{{ asset('storage/images/' . $item->image_path) }}" class="card-img-top img-fluid" alt="{{ $item->name }}">
+                        <a href="{{route('customize.order', ['menu' => $item->id])}}" style="text-decoration: none;">
+                                <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
+                            </a>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $item->name }}</h5>
                             <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
                             <p class="card-text">Status: {{ $item->status }}</p>
+                            <div class="d-flex justify-content-center">
+                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
+                            </form>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="{{ route('view_add_Feedback', ['menu_id' => $menu->id ?? 6]) }}" class="btn btn-primary me-3">Add Feedback</a>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -146,22 +172,36 @@
     <!-- Side Dish Section -->
     <div class="category-title">Side Dish</div>
     <div class="row">
-        @foreach ($menuItems as $item)
-            @if ($item->category === 'Side Dish')
-                <div class="col-md-4 mb-4">
-                    <div class="card text-center">
-                        <div class="image-container">
-                            <img src="{{ asset('storage/images/' . $item->image_path) }}" class="card-img-top img-fluid" alt="{{ $item->name }}">
+    @foreach ($menuItems as $item)
+                @if ($item->category === 'Side Dish')
+                    <div class="col-md-4 mb-4">
+                        <div class="card text-center">
+                        <a href="{{ route('customize.order', ['menu' => $item['id']]) }}"
+                                style="text-decoration: none;">
+                                <div class="image-container">
+                                <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
+                                </div>
+                            </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $item->name }}</h5>
+                                    <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
+                                    <p class="card-text">Status: {{ $item->status }}</p>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
+                            </form>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="{{ route('view_add_Feedback', ['menu_id' => $menu->id ?? 6]) }}" class="btn btn-primary me-3">Add Feedback</a>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $item->name }}</h5>
-                            <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                            <p class="card-text">Status: {{ $item->status }}</p>
                         </div>
                     </div>
-                </div>
-            @endif
-        @endforeach
+                @endif
+            @endforeach
     </div>
 
 </div>
