@@ -45,8 +45,8 @@
                                 <div class="mb-3">
                                     <label for="order_portion_{{ $menu->id }}" class="form-label"><strong>Portion Size</strong></label>
                                     <select id="order_portion_{{ $menu->id }}" name="order_portion[{{ $menu->id }}]" class="form-select">
-                                        <option value="regular" {{ $menu->order_portion === 'regular' ? 'selected' : '' }}>Regular (+RM 0)</option>
-                                        <option value="large" {{ $menu->order_portion === 'large' ? 'selected' : '' }}>Large (+RM 2.00)</option>
+                                        <option value="regular" {{ $menu->order_portion === 'regular' ? 'selected' : '' }}>Regular</option>
+                                        <option value="large" {{ $menu->order_portion === 'large' ? 'selected' : '' }}>Large</option>
                                     </select>
                                 </div>
 

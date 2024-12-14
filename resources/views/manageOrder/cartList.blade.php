@@ -8,17 +8,7 @@
         body {
             background-color: #f8f9fa;
         }
-
-        .cart-container {
-            max-width: 600px;
-            margin: 50px auto;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 0 0 10px 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
+    
         .cart-header {
             background: #fff;
             color: #000;
@@ -26,71 +16,64 @@
             text-align: center;
             font-size: 20px;
             font-weight: bold;
-            border-radius: 10px 10px 0 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .cart-body {
-            padding: 20px;
-        }
-
+    
         .cart-items {
             width: 100%;
-            border-top: 1px solid #ddd;
             padding-top: 20px;
         }
-
+    
         .cart-item {
-            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
         }
-
+    
         .cart-item img {
-            width: 60px;
-            height: 60px;
+            width: 200px;
+            height: auto;
             object-fit: cover;
             border-radius: 5px;
         }
-
+    
         .cart-item-details {
             flex: 1;
             margin-left: 20px;
         }
-
+    
         .cart-item-name {
             font-size: 20px;
+            font-weight: bold;
             margin: 0;
         }
-
+    
         .cart-item-price {
             color: #28a745;
             font-weight: bold;
         }
-
+    
+        .cart-item-quantity button {
+            background: #ddd;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    
+        .cart-item-quantity .quantity-input {
+            width: 40px;
+            text-align: center;
+        }
+    
         .total {
             font-size: 20px;
             font-weight: bold;
             color: #28a745;
-            margin: 10 0 10 0;
             text-align: right;
         }
-
-        .cart-footer {
-            text-align: right;
-            padding: 20px;
-            display: flex;
-        }
-
-        .quantity-input {
-            width: 40px;
-            text-align: center;
-        }
-
+    
         .checkout-btn {
-            margin-left: auto;
             background: #dc3545;
             color: #fff;
             font-size: 18px;
@@ -100,11 +83,11 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
+    
         .checkout-btn:hover {
             background: #c82333;
         }
-
+    
         .back-btn {
             background: darkgray;
             color: #fff;
@@ -115,14 +98,16 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
+    
         .back-btn:hover {
             background: grey;
         }
     </style>
+    
 </head>
 @section('content')
     <div class="container">
+        @include('manageOrder.progress', ['step' => 1])
         <div class="cart-header shadow">My Cart</div>
         <div class="card p-4 shadow">
             <div class="cart-items">

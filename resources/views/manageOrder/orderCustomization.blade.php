@@ -53,31 +53,10 @@
                             <div class="mb-3">
                                 <label for="portion-size" class="form-label"><strong>Portion Size</strong></label>
                                 <select id="order_portion" name="order_portion" class="form-select">
-                                    <option value="regular">Regular (+RM 0)</option>
-                                    <option value="large">Large (+RM 2.00)</option>
+                                    <option value="regular">Regular</option>
+                                    <option value="large">Large</option>
                                 </select>
                             </div>
-
-                            <!-- Add Toppings -->
-                            {{-- <div class="mb-3">
-                                <label for="toppings" class="form-label"><strong>Add Toppings</strong></label>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="extra-cheese" name="toppings[]"
-                                        value="extra_cheese">
-                                    <label for="extra-cheese" class="form-check-label">Extra Cheese (+$1.00)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="bacon" name="toppings[]"
-                                        value="bacon">
-                                    <label for="bacon" class="form-check-label">Vagies (+$1.50)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="onion-rings" name="toppings[]"
-                                        value="onion_rings">
-                                    <label for="onion-rings" class="form-check-label">Onion Rings (+$0.75)</label>
-                                </div>
-                            </div> --}}
-
 
                             <!-- Special Instructions -->
                             <div class="mb-3">

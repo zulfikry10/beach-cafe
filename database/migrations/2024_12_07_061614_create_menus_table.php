@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->double('price');
             $table->string('status');
+            $table->string('category')->nullable(); 
             $table->string('image_path')->nullable(); // Add the image_path column (nullable in case some menus don't have images)
             $table->timestamps();
         });

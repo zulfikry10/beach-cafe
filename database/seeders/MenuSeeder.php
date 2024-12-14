@@ -19,13 +19,15 @@ class MenuSeeder extends Seeder
                 'name' => 'Ais Jelly Limau',
                 'price' => '4.00',
                 'status' => 'Available',
+                'category' => 'Drink',
                 'image_path' => '1734019678.jpg',
             ],
             [
                 'id' => '2',
-                'name' => 'Rench Fries',
+                'name' => 'French Fries',
                 'price' => '5.00',
                 'status' => 'Available',
+                'category' => 'Side Dish',
                 'image_path' => '1734019768.jpg',
             ],
             [
@@ -33,6 +35,7 @@ class MenuSeeder extends Seeder
                 'name' => 'Mee Kari',
                 'price' => '5.00',
                 'status' => 'Available',
+                'category' => 'Food',
                 'image_path' => '1734019794.png',
             ],
             [
@@ -40,6 +43,7 @@ class MenuSeeder extends Seeder
                 'name' => 'Mee Kari Special',
                 'price' => '7.00',
                 'status' => 'Unavailable',
+                'category' => 'Food',
                 'image_path' => '1734019823.jpg',
             ],
             [
@@ -47,6 +51,7 @@ class MenuSeeder extends Seeder
                 'name' => 'Salad',
                 'price' => '5.00',
                 'status' => 'Available',
+                'category' => 'Food',
                 'image_path' => '1734019858.jpg',
             ],
             [
@@ -54,6 +59,7 @@ class MenuSeeder extends Seeder
                 'name' => 'Mojito',
                 'price' => '4.00',
                 'status' => 'Available',
+                'category' => 'Drink',
                 'image_path' => '1734019883.jpg',
             ],
             [
@@ -61,6 +67,7 @@ class MenuSeeder extends Seeder
                 'name' => 'Mojito Lemon',
                 'price' => '5.00',
                 'status' => 'Unavailable',
+                'category' => 'Drink',
                 'image_path' => '1734019926.jpg',
             ],
             [
@@ -68,6 +75,7 @@ class MenuSeeder extends Seeder
                 'name' => 'Mojito Watermelon',
                 'price' => '6.00',
                 'status' => 'Available',
+                'category' => 'Drink',
                 'image_path' => '1734020017.png',
             ],
             [
@@ -75,6 +83,7 @@ class MenuSeeder extends Seeder
                 'name' => 'Nasi Lemak Telur',
                 'price' => '5.00',
                 'status' => 'Unavailable',
+                'category' => 'Drink',
                 'image_path' => '1734020058.jpg',
             ],
             [
@@ -82,6 +91,7 @@ class MenuSeeder extends Seeder
                 'name' => 'Nasi Lemak Ayam',
                 'price' => '8.00',
                 'status' => 'Available',
+                'category' => 'Food',
                 'image_path' => '1734020095.png',
             ],
             [
@@ -89,6 +99,7 @@ class MenuSeeder extends Seeder
                 'name' => 'Oden',
                 'price' => '5.00',
                 'status' => 'Available',
+                'category' => 'Food',
                 'image_path' => '1734020137.jpg',
             ],
             [
@@ -96,7 +107,8 @@ class MenuSeeder extends Seeder
                 'name' => 'Sandwich',
                 'price' => '4.00',
                 'status' => 'Available',
-                'image_path' => '1734020137.jpg',
+                'category' => 'Side Dish',
+                'image_path' => '1734020199.jpg',
             ],
         ];
         foreach ($menus as $menu) {

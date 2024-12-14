@@ -43,6 +43,7 @@ Route::get('/add-menu', [MenuController::class, 'addMenu'])->name('add-menu');
 //order
 
 // Route::get('/orderCustomization', [OrderController::class, 'showCustomization'])->name('customize.order');
+
 Route::get('/orderCustomization/{menu}', [OrderController::class, 'showCustomization'])->name('customize.order');
 Route::post('/order/store', [OrderController::class, 'storeToCart'])->name('order.store');
 Route::get('/deleteCart/{order}', [OrderController::class, 'destroyOrder'])->name('order.destroy');

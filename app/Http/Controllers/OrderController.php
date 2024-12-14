@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-
     //show order customization
     public function showCustomization($application)
     {
@@ -22,6 +21,7 @@ class OrderController extends Controller
         return view('manageOrder.orderCustomization', compact('menus'));
     }
 
+    //show update customization
     public function updateCustomization($orderId)
     {
         $menus = OrderItems::with(['order', 'menu'])
@@ -35,6 +35,7 @@ class OrderController extends Controller
         return view('manageOrder.editOrderCustomization', compact('menus'));
     }
 
+    //update customization
     public function update(Request $request, $orderId)
     {
         // Update the items in the order based on the form data
@@ -51,13 +52,7 @@ class OrderController extends Controller
         return redirect()->route('order.cart')->with('success', 'Order updated successfully!');
     }
 
-
-
-
-
-
-
-
+    //store order to cart
     // dd($request->all());
     public function storeToCart(Request $request)
     {
@@ -93,7 +88,7 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Successfully Add to Cart.');
     }
 
-
+    //show cart list
     public function showCartList()
     {
         // $userId = auth()->id(); // Get the authenticated user ID
@@ -109,54 +104,7 @@ class OrderController extends Controller
         return view('manageOrder.cartList', compact('cartItems'));
     }
 
-    // public function showConfirmation()
-    // {
-    //     // Retrieve the order details, if needed
-    //     $userId = 2;
-    //     $order = ORDER::table('orders')
-    //         ->where('user_id', $userId)
-    //         ->where('order_status', 'pending')
-    //         ->first();
-
-    //     // Pass data to the confirmation view
-    //     return view('orderConfirmation', ['order' => $order]);
-    // }
-
-    //     public function update(Request $request)
-    // {
-    //     // Validate the incoming request
-    //     $request->validate([
-    //         'order_item_id' => 'required|exists:order_items,id',
-    //         'order_quantity' => 'required|integer|min:1',
-    //     ]);
-
-    //     // Find the order item
-    //     $orderItem = OrderItems::find($request->order_item_id);
-
-    //     if ($orderItem) {
-    //         // Update order item quantity
-    //         $orderItem->order_quantity = $request->order_quantity;
-    //         $orderItem->save();
-
-    //         // Recalculate the order total in the orders table
-    //         $order = $orderItem->order;
-    //         $order->order_total = $order->orderItems->sum(function ($item) {
-    //             return $item->order_quantity * $item->menu->price;
-    //         });
-    //         $order->save();
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'order_total' => $order->order_total,
-    //             'item_total' => $orderItem->order_quantity * $orderItem->menu->price,
-    //         ]);
-    //     }
-
-    //     return response()->json(['success' => false], 400);
-    // }
-
-
-
+    //checkout process
     public function checkout(Request $request)
     {
         // Hardcoding the user ID for now; replace with auth()->id() for production
@@ -200,24 +148,7 @@ class OrderController extends Controller
         return view('manageOrder.orderConfirmation'); // Ensure you have this view file created
     }
 
-
-
-
-    // public function showCofirmOrder()
-    // {
-    //     /// $userId = auth()->id(); // Get the authenticated user ID
-    //     $userId = 2; // Get the authenticated user ID
-    //     $datas = Order::where($userId)->get();
-    //     // // Retrieve all items for all pending orders for the user
-    //     // $cartItems = OrderItems::whereHas('order', function ($query) use ($userId) {
-    //     //     $query->where('user_id', $userId)->where('order_status', 'pending');
-    //     // })
-    //     //     ->with('menu') // Include menu details
-    //     //     ->get();
-
-    //     return view('manageOrder.orderConfirmation', compact('cartItems'));
-    // }
-
+    //show confirmation
     public function showOrderConfirmation()
     {
         $userId = 2;
@@ -231,22 +162,7 @@ class OrderController extends Controller
         return view('manageOrder.orderConfirmation', compact('cartItems'));
     }
 
-    // public function confirmOrder(Request $request, $orderId)
-    // {
-    //     $order = Order::find($orderId);
 
-    //     if (!$order || $order->order_status !== 'pending') {
-    //         return redirect()->back()->withErrors(['message' => 'Order not found or already processed.']);
-    //     }
-
-    //     // Update the order status
-    //     $order->order_status = 'success';
-    //     $order->save();
-
-    //     // Redirect to the invoice page
-    //     return redirect()->route('invoice.show', ['orderId' => $orderId])
-    //         ->with('success', 'Order placed successfully!');
-    // }
     public function confirmOrder(Request $request, $orderId)
     {
         $order = Order::find($orderId);
