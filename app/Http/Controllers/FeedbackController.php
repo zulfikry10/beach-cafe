@@ -6,8 +6,8 @@ use App\Models\Feedback;
 use App\Models\Menu;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class FeedbackController extends Controller
@@ -16,7 +16,6 @@ class FeedbackController extends Controller
         return view('manageFeedback.dummydisplay');
     }
 
-    //
     public function viewListOFeedback($id): View {
         $user = User::findOrFail($id);
 
@@ -27,11 +26,12 @@ class FeedbackController extends Controller
         }
 
         foreach ($feedbacks as $fb) {
-            $fb->date = Carbon::parse()->format(' j F Y');
+            $fb->date = Carbon::parse($fb->date)->format(' j F Y');
         }
 
         return view('manageFeedback.listofFeedback', [
             'feedbacks' => $feedbacks,
+            'user' => $user,
         ]);
     }
 
@@ -40,6 +40,24 @@ class FeedbackController extends Controller
 
         return view('manageFeedback.addFeedback', [
             'menu' => $menu,
+        ]);
+    }
+
+    public function viewFeedbackDetails($id): View {
+        $feedback = Feedback::findOrFail($id);
+
+        $feedback->date = Carbon::parse($feedback->date)->format('j F Y');
+
+        return view('manageFeedback.feedbackDetails', [
+            'feedback' => $feedback,
+        ]);
+    }
+
+    public function viewEditFeedback($id): View {
+        $feedback = Feedback::findOrFail($id);
+
+        return view('manageFeedback.editFeedback', [
+            'feedback' => $feedback,
         ]);
     }
 
@@ -60,6 +78,33 @@ class FeedbackController extends Controller
             'date' => $request->date,
         ]);
 
-        return redirect()->route('dummydisplay');
+        return redirect()->route('view_add_Feedback', ['menu_id' => $request->menu_id])->with('blue-message', 'Thank you for your feedback!');
+    }
+
+    public function updateFeedback(Request $request, $id): RedirectResponse {
+        $request->validate([
+            'comment' => ['required', 'string', 'max:255'],
+            'rating' => ['required', 'integer'],
+            'date' => ['required', 'date'],
+        ]);
+
+        $feedback =  Feedback::findOrFail($id);
+
+        $feedback->update([
+            'comment' => $request->input('comment'),
+            'rating' => $request->input('rating'),
+            'date' => $request->input('date'),
+            'user_id' => $feedback->user_id,
+            'menu_id' => $feedback->menu_id,
+        ]);
+        return redirect()->route('view_feedback_details', ['id' => $feedback->id])->with('blue-message', 'Successfully Update Feedback');
+    }
+
+    public function deleteFeedback($id) {
+        $feedback = Feedback::findOrFail($id);
+        $user = $feedback->user;
+        $feedback->delete();
+
+        return redirect()->route('view_all_feedback', ['id' => $user->id])->with('red-message', 'Feedback Successfully Deleted!');
     }
 }

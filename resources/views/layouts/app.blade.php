@@ -14,7 +14,7 @@
 
     <title>Beach Cafe</title>
 
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body >
     @php
