@@ -64,14 +64,12 @@
         <div class="card p-4 shadow">
 
             <!-- Order Details Section -->
-
                 <div class="col-12">
                     @if ($items->isNotEmpty())
                         <h5><strong>Order ID:</strong> #{{ $items->first()->order->id }}</h5>
                         <p><strong>Order Date:</strong> {{ $items->first()->order->created_at->format('F d, Y') }}</p>
                         <hr>
                     @endif
-
 
                     <!-- Order List Section -->
                     <h5><strong>Order List</strong></h5>

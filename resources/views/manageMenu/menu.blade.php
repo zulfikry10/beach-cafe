@@ -100,23 +100,23 @@
         <div class="category-title">Drinks</div><br><br>
         <div class="row">
             @foreach ($menuItems as $item)
-            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;">
                 @if ($item->category === 'Drink')
                     <div class="col-md-4 mb-4">
                         <div class="card text-center">
-                            <div class="image-container">
-                                <img src="{{ asset('storage/images/' . $item->image_path) }}" class="card-img-top img-fluid"
-                                    alt="{{ $item->name }}">
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                                <p class="card-text">Status: {{ $item->status }}</p>
-                            </div>
+                            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;">
+                                <div class="image-container">
+                                    <img src="{{ asset('storage/images/' . $item->image_path) }}"
+                                        class="card-img-top img-fluid" alt="{{ $item->name }}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $item->name }}</h5>
+                                    <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
+                                    <p class="card-text">Status: {{ $item->status }}</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 @endif
-                </a>
             @endforeach
         </div>
 
@@ -124,48 +124,51 @@
         <div class="category-title">Food</div><br><br>
         <div class="row">
             @foreach ($menuItems as $item)
-            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;">
                 @if ($item->category === 'Food')
                     <div class="col-md-4 mb-4">
                         <div class="card text-center">
-                            <div class="image-container">
-                                <img src="{{ asset('storage/images/' . $item->image_path) }}" class="card-img-top img-fluid"
-                                    alt="{{ $item->name }}">
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                                <p class="card-text">Status: {{ $item->status }}</p>
-                            </div>
+                            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}"
+                                style="text-decoration: none;">
+                                <div class="image-container">
+                                    <img src="{{ asset('storage/images/' . $item->image_path) }}"
+                                        class="card-img-top img-fluid" alt="{{ $item->name }}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $item->name }}</h5>
+                                    <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
+                                    <p class="card-text">Status: {{ $item->status }}</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 @endif
-                </a>
             @endforeach
         </div>
 
         <!-- Side Dish Section -->
-        <div class="category-title">Side Dish</div><br><br>
+        <div class="category-title">Food</div><br><br>
         <div class="row">
             @foreach ($menuItems as $item)
-            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;">
                 @if ($item->category === 'Side Dish')
                     <div class="col-md-4 mb-4">
                         <div class="card text-center">
-                            <div class="image-container">
-                                <img src="{{ asset('storage/images/' . $item->image_path) }}"
-                                    class="card-img-top img-fluid" alt="{{ $item->name }}">
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                                <p class="card-text">Status: {{ $item->status }}</p>
-                            </div>
+                            <a href="{{ route('customize.order', ['menu' => $item['id']]) }}"
+                                style="text-decoration: none;">
+                                <div class="image-container">
+                                    <img src="{{ asset('storage/images/' . $item->image_path) }}"
+                                        class="card-img-top img-fluid" alt="{{ $item->name }}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $item->name }}</h5>
+                                    <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
+                                    <p class="card-text">Status: {{ $item->status }}</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 @endif
-                </a>
             @endforeach
         </div>
+    </div>
     </div>
 @endsection
