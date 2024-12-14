@@ -5,7 +5,7 @@
 
 .main-background-staff {
     margin-top: 70px;
-    background-color: rgb(168, 212, 65);
+    background-color: #37d48b;
 }
 
 .main-img {
@@ -77,6 +77,19 @@ input[type="radio"]:checked ~ label ~ label {
 .star:hover ~ label {
     color: #ffc107;
 }
+
+.star-disp {
+    font-size: 2rem;
+    margin-right: 4px;
+    display: flex;
+}
+.filled {
+    color: gold;
+}
+.empty {
+    color: lightgray;
+}
+
 
 @keyframes fadeIn {
     from {
