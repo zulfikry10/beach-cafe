@@ -59,6 +59,16 @@ Route::get('/order-history', [OrderController::class, 'showHistory'])->name('ord
 Route::post('/reorder/{order}', [OrderController::class, 'reorder'])->name('order.reorder');
 Route::delete('/reorders/{order}', [OrderController::class, 'reorderDestroy'])->name('reorder.delete');
 
+//staff order
+
+    // Route to display list of orders
+    Route::get('/staff-orderList', [OrderController::class, 'showOrderList'])->name('staff.orders.index');
+
+    // Route to display order details
+    Route::get('/ordersList/{id}', [OrderController::class, 'show'])->name('order.details');
+    Route::get('/staff/orders/{id}', [OrderController::class, 'showOrder'])->name('order.details');
+
+
 
 
 

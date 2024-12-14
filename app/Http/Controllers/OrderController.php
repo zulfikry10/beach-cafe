@@ -378,6 +378,24 @@ class OrderController extends Controller
         return redirect()->route('order.history')->with('success', 'Order deleted successfully.');
     }
 
+    //staff
+    
+    public function showOrderList()
+    
+        {
+            // Fetch orders from most recent to oldest with pagination
+            $orders = Order::with('items.menu')->orderBy('created_at', 'desc')->paginate(10);
+    
+            return view('manageOrder.staffOrderList', compact('orders'));
+        }
+
+        public function showOrder($id)
+{
+    $order = Order::with('items.menu')->findOrFail($id);
+
+    return view('manageOrder.staffOrderDetails', compact('order'));
+}
+
 
 
 
