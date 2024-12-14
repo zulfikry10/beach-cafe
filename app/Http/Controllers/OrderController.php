@@ -142,12 +142,6 @@ class OrderController extends Controller
         return redirect()->route('order.confirmation')->with('success', 'Order updated successfully!');
     }
 
-
-    public function orderConfirmation()
-    {
-        return view('manageOrder.orderConfirmation'); // Ensure you have this view file created
-    }
-
     //show confirmation
     public function showOrderConfirmation()
     {
@@ -185,18 +179,6 @@ class OrderController extends Controller
     }
 
 
-    // public function show($orderId)
-    // {
-
-    //     $order = Order::with('items.menu')->find($orderId);
-
-    //     if (!$order) {
-    //         abort(404, 'Order not found.');
-    //     }
-
-    //     return view('manageOrder.orderStatus', compact('order'));
-    // }
-
     public function orderStatus($orderId)
     {
         // Attempt to find the order items by the given order ID
@@ -212,15 +194,7 @@ class OrderController extends Controller
     }
 
 
-    // public function showInvoice($orderId)
-    // {
-    //     $order = Order::with('items.menu')->find($orderId);
-    //     return view('manageOrder.orderStatus', compact('order'));
-    // }
-
-
-
-    //delete existing ticket
+    //delete existing order
     public function destroyOrder($application)
     {
         $order = OrderItems::find($application);
@@ -231,8 +205,6 @@ class OrderController extends Controller
 
         return redirect()->route('order.cart');
     }
-
-
 
 
     public function showHistory()
@@ -295,29 +267,20 @@ class OrderController extends Controller
     }
 
     //staff
-    
+
     public function showOrderList()
-    
-        {
-            // Fetch orders from most recent to oldest with pagination
-            $orders = Order::with('items.menu')->orderBy('created_at', 'desc')->paginate(10);
-    
-            return view('manageOrder.staffOrderList', compact('orders'));
-        }
 
-        public function showOrder($id)
-{
-    $order = Order::with('items.menu')->findOrFail($id);
+    {
+        // Fetch orders from most recent to oldest with pagination
+        $orders = Order::with('items.menu')->orderBy('created_at', 'desc')->paginate(10);
 
-    return view('manageOrder.staffOrderDetails', compact('order'));
-}
+        return view('manageOrder.staffOrderList', compact('orders'));
+    }
 
+    public function showOrder($id)
+    {
+        $order = Order::with('items.menu')->findOrFail($id);
 
-
-
-
-    // In your controller (e.g., OrderController)
-
-
-
+        return view('manageOrder.staffOrderDetails', compact('order'));
+    }
 }
