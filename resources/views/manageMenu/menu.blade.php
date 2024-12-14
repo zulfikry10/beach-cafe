@@ -29,6 +29,7 @@
 
         .image-container img {
             height: 150px;
+
             width: 100%;
             object-fit: cover;
             border-top-left-radius: 5px;
@@ -75,6 +76,7 @@
 </head>
 
 @section('content')
+
 <div class="container">
     <!-- Add Menu Section -->
     <div class="row justify-content-center">

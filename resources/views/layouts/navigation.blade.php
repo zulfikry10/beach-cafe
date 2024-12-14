@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
     <!-- Left side: Navbar -->
     <a class="navbar-brand" href="{{ route('profile.edit') }}">Hello, {{ Auth::user()->name }}!</a>

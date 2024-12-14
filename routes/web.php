@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -54,6 +56,10 @@ Route::get('/edit_feedback_details/{id}', [FeedbackController::class, 'viewEditF
 Route::get('/add_feedback/{menu_id}', [FeedbackController::class, 'viewAddFeedback'])->name('view_add_Feedback');
 Route::post('/add_feedback/create', [FeedbackController::class, 'createFeedback'])->name('create_feedback');
 
+//customer menu
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+
+//staff menu
 //   MODULE MENU
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 Route::get('/staff-menu', [MenuController::class, 'staffMenu']);
@@ -63,6 +69,42 @@ Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
 Route::put('/menu/{menu}', [MenuController::class, 'update'])->name('menu.update');
 Route::get('/staff-menu', [MenuController::class, 'staffMenu'])->name('staff-menu');
 Route::get('/add-menu', [MenuController::class, 'addMenu'])->name('add-menu');
+
+
+
+//order
+
+// Route::get('/orderCustomization', [OrderController::class, 'showCustomization'])->name('customize.order');
+
+Route::get('/orderCustomization/{menu}', [OrderController::class, 'showCustomization'])->name('customize.order');
+Route::post('/order/store', [OrderController::class, 'storeToCart'])->name('order.store');
+Route::get('/deleteCart/{order}', [OrderController::class, 'destroyOrder'])->name('order.destroy');
+Route::get('/cartList', [OrderController::class, 'showCartList'])->name('order.cart');
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+Route::get('/order-confirmation', [OrderController::class, 'showOrderConfirmation'])->name('order.confirmation');
+Route::post('/confirm-order/{order}', [OrderController::class, 'confirmOrder'])->name('order.confirm');
+Route::post('/confirm-order/{orderId}', [OrderController::class, 'confirmOrder'])->name('confirmOrder');
+Route::get('/order-status/{orderId}', [OrderController::class, 'orderStatus'])->name('orderStatus');
+Route::get('/editCart/{order}', [OrderController::class, 'updateCustomization'])->name('order.edit');
+Route::put('/order/{order}', [OrderController::class, 'update'])->name('order.update');
+
+Route::get('/order-history', [OrderController::class, 'showHistory'])->name('order.history');
+Route::post('/reorder/{order}', [OrderController::class, 'reorder'])->name('order.reorder');
+Route::delete('/reorders/{order}', [OrderController::class, 'reorderDestroy'])->name('reorder.delete');
+
+//staff order
+
+    // Route to display list of orders
+    Route::get('/staff-orderList', [OrderController::class, 'showOrderList'])->name('staff.orders.index');
+
+    // Route to display order details
+    Route::get('/ordersList/{id}', [OrderController::class, 'show'])->name('order.details');
+    Route::get('/staff/orders/{id}', [OrderController::class, 'showOrder'])->name('order.details');
+
+
+
+
+
 Route::patch('/update_feedback/feedback/{id}', [FeedbackController::class, 'updateFeedback'])->name('update_feedback');
 Route::delete('/delete_feedback/{id}', [FeedbackController::class, 'deleteFeedback'])->name('delete_feedback');
 });

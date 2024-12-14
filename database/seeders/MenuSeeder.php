@@ -125,6 +125,7 @@ class MenuSeeder extends Seeder
                 'updated_at' => $now,
             ],
         ];
+      
         foreach ($menus as $menu) {
             DB::table('menus')->insert($menu);
         }

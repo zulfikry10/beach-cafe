@@ -1,3 +1,4 @@
+
 {{-- @extends('layouts.app')
 
 <head>
@@ -103,6 +104,7 @@
             <div class="card text-center">
                 <div class="image-container">
                     <img src="{{ asset('asset/default-image/no-image.jpg') }}" class="card-img-top img-fluid" alt="Add Menu">
+
                     <h5 class="card-title">Name</h5>
                         <p class="card-text">Price</p>
                         <p class="card-text">Status</p>
@@ -118,6 +120,7 @@
                 alert("{{ session('success') }}");
             </script>
         @endif
+
 
         <!-- Drinks Section -->
         <div class="category-title">Drinks</div>
@@ -205,12 +208,14 @@
                             <div class="d-flex justify-content-center">
                             <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
                             &nbsp;&nbsp;&nbsp;
+
                             <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
                             </form>
                         </div>
+
 
                         </div>
                     </div>
