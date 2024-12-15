@@ -129,7 +129,7 @@
                         @if (Auth::user()->role == 'customer')
                             
                         &nbsp;&nbsp;&nbsp;
-                        <a href="{{ route('view_add_Feedback', ['menu_id' => $menu->id ?? 6]) }}" class="btn btn-primary me-3">Add Feedback</a>
+                        <a href="{{ route('view_add_Feedback', ['menu_id' => $item->id]) }}" class="btn btn-primary me-3">Add Feedback</a>
                         @endif
                         </div>
                         </div>
@@ -167,7 +167,7 @@
                             @if (Auth::user()->role == 'customer')
                             
                             &nbsp;&nbsp;&nbsp;
-                            <a href="{{ route('view_add_Feedback', ['menu_id' => $menu->id ?? 6]) }}" class="btn btn-primary me-3">Add Feedback</a>
+                            <a href="{{ route('view_add_Feedback', ['menu_id' => $item->id]) }}" class="btn btn-primary me-3">Add Feedback</a>
                             @endif                        </div>
                         </div>
                     </div>
@@ -206,7 +206,7 @@
                             @if (Auth::user()->role == 'customer')
                             
                             &nbsp;&nbsp;&nbsp;
-                            <a href="{{ route('view_add_Feedback', ['menu_id' => $menu->id ?? 6]) }}" class="btn btn-primary me-3">Add Feedback</a>
+                            <a href="{{ route('view_add_Feedback', ['menu_id' => $item->id]) }}" class="btn btn-primary me-3">Add Feedback</a>
                             @endif                        </div>
                         </div>
                     </div>
