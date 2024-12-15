@@ -43,7 +43,7 @@
                     </div>
                     <hr>
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-warning text-white">Edit</button>
+                        <button type="submit" class="btn btn-warning text-white">Save</button>
                         &nbsp;&nbsp;&nbsp;
                         <button type="reset" class="btn btn-danger text-white">Reset</button>
                     </div>
