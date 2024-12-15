@@ -164,8 +164,11 @@
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
                             </form>
                             &nbsp;&nbsp;&nbsp;
+                            @if (Auth::user()->role == 'customer')
+                            
+                            &nbsp;&nbsp;&nbsp;
                             <a href="{{ route('view_add_Feedback', ['menu_id' => $menu->id ?? 6]) }}" class="btn btn-primary me-3">Add Feedback</a>
-                        </div>
+                            @endif                        </div>
                         </div>
                     </div>
                 </div>
@@ -200,12 +203,15 @@
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
                             </form>
                             &nbsp;&nbsp;&nbsp;
+                            @if (Auth::user()->role == 'customer')
+                            
+                            &nbsp;&nbsp;&nbsp;
                             <a href="{{ route('view_add_Feedback', ['menu_id' => $menu->id ?? 6]) }}" class="btn btn-primary me-3">Add Feedback</a>
-                        </div>
+                            @endif                        </div>
                         </div>
                     </div>
                 @endif
-            @endforeach
+            @endforeach
     </div>
 
 </div>
