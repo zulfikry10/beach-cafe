@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
-    <div style="text-align: center; font-family:'Poppins'; margin: 50px 0px 100px 0px;">
-    
-    
-    @if (Auth::user()->role == 'staff')
+<head>
     <style>
         .category-title {
             margin-top: 20px;
@@ -21,196 +17,7 @@
             border: none;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
-            height: 300px;
-            /* Ensure cards are of equal height */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background-color: white;
-        }
-
-        .card:hover {
-            transform: scale(1.03);
-        }
-
-        .image-container img {
-            height: 150px;
-            /* Fixed height for all images */
-            width: 100%;
-            /* Ensures it stretches horizontally */
-            object-fit: cover;
-            /* Crop image to fit */
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-        }
-
-        .card-body {
-            flex: 1;
-            /* Make card body take remaining space */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .card-text {
-            font-size: 1rem;
-            margin-bottom: 5px;
-        }
-    </style>
-
-    <div class="container mt-4">
-        <h2 class="text-center mb-4">Our Menu</h2>
-
-        <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-4 mb-4">
-            <div class="card text-center">
-                <div class="image-container">
-                    <img src="{{ asset('asset/default-image/no-image.jpg') }}" class="card-img-top img-fluid" alt="Add Menu">
-
-                    <h5 class="card-title">Name</h5>
-                        <p class="card-text">Price</p>
-                        <p class="card-text">Status</p>
-                </div>
-                <div class="card-body">
-                    <a href="{{ route('add-menu') }}" class="btn btn-primary">Add Menu</a>
-                </div>
-            </div>
-        </div>
-
-        @if (session('success'))
-            <script>
-                alert("{{ session('success') }}");
-            </script>
-        @endif
-
-
-        <!-- Drinks Section -->
-        <div class="category-title">Drinks</div>
-        <div class="row">
-            @foreach ($menuItems as $item)
-           
-                @if ($item->category === 'Drink')
-                    <div class="col-md-4 mb-4">
-                        <div class="card text-center">
-                            <div class="image-container">
-                                <img src="{{ asset('asset/default-image/' . $item->image_path) }}" class="card-img-top img-fluid"
-                                    alt="{{ $item->name }}">
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                                <p class="card-text">Status: {{ $item->status }}</p>
-                                <div class="d-flex justify-content-center">
-                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
-                            </form>
-                        </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                </a>
-            @endforeach
-        </div>
-
-        <!-- Food Section -->
-        <div class="category-title">Food</div>
-        <div class="row">
-            @foreach ($menuItems as $item)
-            
-                @if ($item->category === 'Food')
-                    <div class="col-md-4 mb-4">
-                        <div class="card text-center">
-                            <div class="image-container">
-                            <img src="{{ asset('asset/default-image/' . $item->image_path) }}" class="card-img-top img-fluid"
-                            alt="{{ $item->name }}">
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                                <p class="card-text">Status: {{ $item->status }}</p>
-                                <div class="d-flex justify-content-center">
-                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
-                            </form>
-                        </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                </a>
-            @endforeach
-        </div>
-
-        <!-- Side Dish Section -->
-        <div class="category-title">Side Dish</div>
-        <div class="row">
-            @foreach ($menuItems as $item)
-            
-                @if ($item->category === 'Side Dish')
-                    <div class="col-md-4 mb-4">
-                        <div class="card text-center">
-                            <div class="image-container">
-                            <img src="{{ asset('asset/default-image/' . $item->image_path) }}" class="card-img-top img-fluid"
-                            class="card-img-top img-fluid" alt="{{ $item->name }}">
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                                <p class="card-text">Status: {{ $item->status }}</p>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
-                            &nbsp;&nbsp;&nbsp;
-
-                            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
-                            </form>
-                        </div>
-
-
-                        </div>
-                    </div>
-                @endif
-                </a>
-            @endforeach
-        </div>
-    </div>
-    @elseif (Auth::user()->role == 'customer')
-    <style>
-        .category-title {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 1.5rem;
-            text-align: center;
-            background-color: #f8f9fa;
-            padding: 10px 0;
-            border-top: 2px solid #ddd;
-            border-bottom: 2px solid #ddd;
-        }
-
-        .card {
-            border: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            height: 300px;
+            height: 200px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -222,7 +29,6 @@
 
         .image-container img {
             height: 150px;
-
             width: 100%;
             object-fit: cover;
             border-top-left-radius: 5px;
@@ -245,6 +51,17 @@
         .card-text {
             font-size: 1rem;
             margin-bottom: 5px;
+        }
+
+        .status-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .profit-text {
+            font-size: 0.9rem;
+            color: #28a745; /* Green color for profit */
+            font-weight: bold;
         }
 
         .add-menu-card {
@@ -265,87 +82,161 @@
         .container {
             margin-top: 20px;
         }
+
+        /* Custom style to disable link */
+        .disabled-link {
+            pointer-events: none;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     </style>
+</head>
 
-<div class="container">
+@section('content')
+        
+    @if(auth()->user()->role === 'staff')
+    <!-- Time Range Filter for Staff -->
+    <div style="width:70%"> 
+    <form method="GET" action="{{ route('dashboard') }}">
+        <div>
+            <div class="form-group"  style="display: flex;">
+                <label for="time_range" style="width:25%">Choose Range Date:</label>
+                    <select name="time_range" id="time_range" class="form-control" style="width:30%;margin-right:10px">
+                        <option value="weekly" {{ $timeRange == 'weekly' ? 'selected' : '' }}>Weekly</option>
+                        <option value="monthly" {{ $timeRange == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                        <option value="yearly" {{ $timeRange == 'yearly' ? 'selected' : '' }}>Yearly</option>
+                    </select>
+            
+            <button type="submit" class="btn btn-primary" style="width:10%">Filter</button>
+            </div>
+        </div>
+                    
+    </form>
+    </div>
+            <div class="category-title mb-5">💰 Most Profit</div>
+            <div class="row">
+                @foreach($mostProfit as $item)
+                    <div class="col-md-4 mb-4">
+                        <div class="card text-center">
+                            <div class="image-container">
+                                <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $item->name }}</h5>
+                                <p class="profit-text">Profit: RM{{ number_format($item->total_quantity * $item->price, 2) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
-    @if (session('success'))
-        <script>
-            alert("{{ session('success') }}");
-        </script>
-    @endif
+            <div class="category-title mb-5">📉 Least Profit</div>
+            <div class="row">
+                @foreach($leastProfit as $item)
+                    <div class="col-md-4 mb-4">
+                        <div class="card text-center">
+                            <div class="image-container">
+                                <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $item->name }}</h5>
+                                <p class="profit-text">Profit: RM{{ number_format($item->total_quantity * $item->price, 2) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
-    <!-- Drinks Section -->
-    <div class="category-title">Drinks</div>
-    <div class="row">
-        @foreach ($menuItems as $item)
-            @if ($item->category === 'Drink')
+        @endif
+
+        <!-- Hot Selling -->
+        <div class="category-title mb-5">🔥 Hot Selling</div>
+        <div class="row">
+            @foreach($hotSelling as $item)
                 <div class="col-md-4 mb-4">
                     <div class="card text-center">
                         <div class="image-container">
-                            <img src="{{ asset('asset/default-image/' . $item->image_path) }}" class="card-img-top img-fluid" alt="{{ $item->name }}">
-                        </div>
+                            @if(auth()->user()->role === 'staff')
+                                <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
+                            @else
+                                <a href="{{ $item->status === 'Unavailable' ? '#' : route('customize.order', ['menu' => $item->id]) }}" style="text-decoration: none;" class="{{ $item->status === 'Unavailable' ? 'disabled-link' : '' }}">
+                                    <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
+                                </a>
+                            @endif
+                        </div>    
                         <div class="card-body">
                             <h5 class="card-title">{{ $item->name }}</h5>
-                            <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                            <p class="card-text">Status: {{ $item->status }}</p>
+                            <p class="card-text">Quantity Sold: {{ $item->total_quantity }}</p>
+                            <p class="status-text">Status: {{ $item->status }}</p>
+                            <!-- Display profit if user is staff -->
+                            @if(auth()->user()->role === 'staff')
+                                <p class="profit-text">Profit: RM{{ number_format($item->total_quantity * $item->price, 2) }}</p>
+                            @endif
                         </div>
                     </div>
                 </div>
-            @endif
-        @endforeach
-    </div>
-
-    <!-- Food Section -->
-    <div class="category-title">Food</div>
-    <div class="row">
-        @foreach ($menuItems as $item)
-            @if ($item->category === 'Food')
+            @endforeach
+        </div>
+        
+        <!-- Hot Items This Week -->
+        <div class="category-title mb-5">📅 Hot Items This Week</div>
+        <div class="row">
+            @foreach($hotThisWeek as $item)
                 <div class="col-md-4 mb-4">
                     <div class="card text-center">
                         <div class="image-container">
-                            <img src="{{ asset('asset/default-image/' . $item->image_path) }}" class="card-img-top img-fluid" alt="{{ $item->name }}">
-                        </div>
+                        
+                            @if(auth()->user()->role === 'staff')
+                                <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
+                           @else
+                           <a href="{{ $item->status === 'Unavailable' ? '#' : route('customize.order', ['menu' => $item->id]) }}" style="text-decoration: none;" class="{{ $item->status === 'Unavailable' ? 'disabled-link' : '' }}">
+                                <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
+                            </a>
+                            @endif
+
+                            
+                        </div>    
                         <div class="card-body">
                             <h5 class="card-title">{{ $item->name }}</h5>
-                            <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                            <p class="card-text">Status: {{ $item->status }}</p>
+                            <p class="card-text">Quantity Sold: {{ $item->total_quantity }}</p>
+                            <p class="status-text">Status: {{ $item->status }}</p>
+                            <!-- Display profit if user is staff -->
+                            @if(auth()->user()->role === 'staff')
+                                <p class="profit-text">Profit: RM{{ number_format($item->total_quantity * $item->price, 2) }}</p>
+                            @endif
                         </div>
                     </div>
                 </div>
-            @endif
-        @endforeach
-    </div>
+            @endforeach
+        </div>
 
-    <!-- Side Dish Section -->
-    <div class="category-title">Side Dish</div>
-    <div class="row">
-        @foreach ($menuItems as $item)
-            @if ($item->category === 'Side Dish')
+        <!-- New Menu -->
+        <div class="category-title mb-5">🆕 New Menu</div>
+        <div class="row">
+            @foreach($newMenus as $menu)
                 <div class="col-md-4 mb-4">
                     <div class="card text-center">
                         <div class="image-container">
-                            <img src="{{ asset('asset/default-image/' . $item->image_path) }}" class="card-img-top img-fluid" alt="{{ $item->name }}">
+                            @if(auth()->user()->role === 'staff')
+                                <img src="{{ asset('asset/default-image/' . $menu->image_path) }}" alt="{{ $menu->name }}" class="card-img-top img-fluid">
+                                @else
+                                <a href="{{ $menu->status === 'Unavailable' ? '#' : route('customize.order', ['menu' => $menu->id]) }}" style="text-decoration: none;" class="{{ $menu->status === 'Unavailable' ? 'disabled-link' : '' }}">
+                                    <img src="{{ asset('asset/default-image/' . $menu->image_path) }}" alt="{{ $menu->name }}" class="card-img-top img-fluid">
+                                </a>
+                            @endif
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ $item->name }}</h5>
-                            <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                            <p class="card-text">Status: {{ $item->status }}</p>
+                            <h5 class="card-title">{{ $menu->name }}</h5>
+                            <p class="card-text">Date Added: {{ $menu->created_at }}</p>
+                            <p class="status-text">Status: {{ $menu->status }}</p>
+                            <!-- Disable link for staff users -->
+                            @if(auth()->user()->role === 'staff')
+                            <p class="profit-text">Profit: RM{{ number_format($item->total_quantity * $item->price, 2) }}</p>
+                            @endif
                         </div>
                     </div>
                 </div>
-            @endif
-        @endforeach
-    </div>
-
-</div>
-
-@if (session('success'))
-    <script>
-        alert("{{ session('success') }}");
-    </script>
-@endif
-    @endif
-    
+            @endforeach
+        </div>
     </div>
 @endsection

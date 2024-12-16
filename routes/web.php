@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\DashboardController;
 
 
 /*
@@ -25,8 +26,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-
-Route::get('/dashboard', [MenuController::class, 'dashboardMenu'])
+Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
@@ -94,25 +94,18 @@ Route::get('/order-confirmation', [OrderController::class, 'showOrderConfirmatio
 Route::post('/confirm-order/{order}', [OrderController::class, 'confirmOrder'])->name('order.confirm');
 Route::post('/confirm-order/{orderId}', [OrderController::class, 'confirmOrder'])->name('confirmOrder');
 Route::get('/order-status/{orderId}', [OrderController::class, 'orderStatus'])->name('orderStatus');
-Route::get('/editCart/{order}', [OrderController::class, 'updateCustomization'])->name('order.edit');
+Route::get('/editCart/{orderId}/{menuId}', [OrderController::class, 'updateCustomization'])->name('order.edit');
 Route::put('/order/{order}', [OrderController::class, 'update'])->name('order.update');
-
 Route::get('/order-history', [OrderController::class, 'showHistory'])->name('order.history');
 Route::post('/reorder/{order}', [OrderController::class, 'reorder'])->name('order.reorder');
 Route::delete('/reorders/{order}', [OrderController::class, 'reorderDestroy'])->name('reorder.delete');
+Route::get('/invoice/download/{order_id}', [OrderController::class, 'downloadInvoice'])->name('invoice.download');
+Route::get('/orders/{id}/download-invoice', [OrderController::class, 'printInvoice'])->name('order.download');
 
 //staff order
-
-    // Route to display list of orders
-    Route::get('/staff-orderList', [OrderController::class, 'showOrderList'])->name('staff.orders.index');
-
-    // Route to display order details
-    Route::get('/ordersList/{id}', [OrderController::class, 'show'])->name('order.details');
-    Route::get('/staff/orders/{id}', [OrderController::class, 'showOrder'])->name('order.details');
-
-
-
-
+// Route to display list of orders
+Route::get('/staff-orderList', [OrderController::class, 'showOrderList'])->name('staff.ordersIndex');
+Route::get('/staff/orders/{id}', [OrderController::class, 'showOrder'])->name('staff.orderDetails');
 
 Route::patch('/update_feedback/feedback/{id}', [FeedbackController::class, 'updateFeedback'])->name('update_feedback');
 Route::delete('/delete_feedback/{id}', [FeedbackController::class, 'deleteFeedback'])->name('delete_feedback');

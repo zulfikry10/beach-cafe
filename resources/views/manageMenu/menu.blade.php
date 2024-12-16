@@ -29,7 +29,6 @@
 
         .image-container img {
             height: 150px;
-
             width: 100%;
             object-fit: cover;
             border-top-left-radius: 5px;
@@ -72,28 +71,19 @@
         .container {
             margin-top: 20px;
         }
+
+        /* Custom style to disable link */
+        .disabled-link {
+            pointer-events: none;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
 @section('content')
 
 <div class="container">
-    <!-- Add Menu Section -->
-    <div class="row justify-content-center">
-        <div class="col-md-4 mb-4">
-            <div class="card add-menu-card">
-                <img src="{{ asset('asset/default-image/no-image.jpg') }}" class="card-img-top img-fluid" alt="Add Menu">
-                <h5 class="card-title">New Menu</h5>
-                <p class="card-text">Add a new menu item</p>
-                <p class="card-text">Price: --</p>
-                <p class="card-text">Status: --</p>
-                <div class="card-body">
-                <a href="{{ route('add-menu') }}" class="btn btn-primary w-100">Add Menu</a>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     @if (session('success'))
         <script>
@@ -102,14 +92,15 @@
     @endif
 
     <!-- Drinks Section -->
-    <div class="category-title">Drinks</div>
+    <div class="category-title mb-5">Drinks</div>
     <div class="row">
         @foreach ($menuItems as $item)
             @if ($item->category === 'Drink')
                 <div class="col-md-4 mb-4">
                     <div class="card text-center">
                         <div class="image-container">
-                            <a href="{{route('customize.order', ['menu' => $item->id])}}" style="text-decoration: none;">
+                            <!-- Disable the link if the item is unavailable -->
+                            <a href="{{ $item->status === 'Unavailable' ? '#' : route('customize.order', ['menu' => $item->id]) }}" style="text-decoration: none;" class="{{ $item->status === 'Unavailable' ? 'disabled-link' : '' }}">
                                 <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
                             </a>
                         </div>
@@ -118,20 +109,9 @@
                             <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
                             <p class="card-text">Status: {{ $item->status }}</p>
                             <div class="d-flex justify-content-center">
-                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
-                            </form>
-
-                        @if (Auth::user()->role == 'customer')
-                            
-                        &nbsp;&nbsp;&nbsp;
-                        <a href="{{ route('view_add_Feedback', ['menu_id' => $item->id]) }}" class="btn btn-primary me-3">Add Feedback</a>
-                        @endif
-                        </div>
+                                <!-- Add Feedback button remains enabled -->
+                                <a href="{{ route('view_add_Feedback', ['menu_id' => $item->id]) }}" class="btn btn-primary me-3">Add Feedback</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -140,14 +120,15 @@
     </div>
 
     <!-- Food Section -->
-    <div class="category-title">Food</div>
+    <div class="category-title mb-5">Food</div>
     <div class="row">
         @foreach ($menuItems as $item)
             @if ($item->category === 'Food')
                 <div class="col-md-4 mb-4">
                     <div class="card text-center">
                         <div class="image-container">
-                        <a href="{{route('customize.order', ['menu' => $item->id])}}" style="text-decoration: none;">
+                            <!-- Disable the link if the item is unavailable -->
+                            <a href="{{ $item->status === 'Unavailable' ? '#' : route('customize.order', ['menu' => $item->id]) }}" style="text-decoration: none;" class="{{ $item->status === 'Unavailable' ? 'disabled-link' : '' }}">
                                 <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
                             </a>
                         </div>
@@ -156,19 +137,12 @@
                             <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
                             <p class="card-text">Status: {{ $item->status }}</p>
                             <div class="d-flex justify-content-center">
-                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
-                            </form>
-                            &nbsp;&nbsp;&nbsp;
-                            @if (Auth::user()->role == 'customer')
-                            
-                            &nbsp;&nbsp;&nbsp;
-                            <a href="{{ route('view_add_Feedback', ['menu_id' => $item->id]) }}" class="btn btn-primary me-3">Add Feedback</a>
-                            @endif                        </div>
+                                <!-- Add Feedback button remains enabled -->
+                                @if (Auth::user()->role == 'customer')
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="{{ route('view_add_Feedback', ['menu_id' => $item->id]) }}" class="btn btn-primary me-3">Add Feedback</a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -177,41 +151,36 @@
     </div>
 
     <!-- Side Dish Section -->
-    <div class="category-title">Side Dish</div>
+    <div class="category-title mb-5">Side Dish</div>
     <div class="row">
-    @foreach ($menuItems as $item)
-                @if ($item->category === 'Side Dish')
-                    <div class="col-md-4 mb-4">
-                        <div class="card text-center">
-                        <a href="{{ route('customize.order', ['menu' => $item['id']]) }}"
-                                style="text-decoration: none;">
-                                <div class="image-container">
+        @foreach ($menuItems as $item)
+            @if ($item->category === 'Side Dish')
+                <div class="col-md-4 mb-4">
+                    <div class="card text-center">
+                        <!-- Disable the link if the item is unavailable -->
+                        <a href="{{ $item->status === 'Unavailable' ? '#' : route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;" class="{{ $item->status === 'Unavailable' ? 'disabled-link' : '' }}">
+                            <div class="image-container">
                                 <img src="{{ asset('asset/default-image/' . $item->image_path) }}" alt="{{ $item->name }}" class="card-img-top img-fluid">
-                                </div>
-                            </a>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $item->name }}</h5>
-                                    <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
-                                    <p class="card-text">Status: {{ $item->status }}</p>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this menu?')">Delete</button>
-                            </form>
-                            &nbsp;&nbsp;&nbsp;
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $item->name }}</h5>
+                            <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
+                            <p class="card-text">Status: {{ $item->status }}</p>
+                            <div class="d-flex justify-content-center">
+                                <!-- Add Feedback button remains enabled -->
+                                &nbsp;&nbsp;&nbsp;
                             @if (Auth::user()->role == 'customer')
                             
                             &nbsp;&nbsp;&nbsp;
                             <a href="{{ route('view_add_Feedback', ['menu_id' => $item->id]) }}" class="btn btn-primary me-3">Add Feedback</a>
-                            @endif                        </div>
+                            @endif
+                            </div>
                         </div>
                     </div>
-                @endif
-            @endforeach
+                </div>
+            @endif
+        @endforeach
     </div>
 
 </div>

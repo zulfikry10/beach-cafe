@@ -8,6 +8,7 @@ use App\Models\Menu;
 use Illuminate\View\View; //provider for add to cart function
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class OrderController extends Controller
 {
@@ -22,18 +23,28 @@ class OrderController extends Controller
     }
 
     //show update customization
-    public function updateCustomization($orderId)
+    public function updateCustomization($orderId, $menuId)
     {
-        $menus = OrderItems::with(['order', 'menu'])
-            ->where('order_id', $orderId)
-            ->get();
-
+        // Now you can use both orderId and menuId
+        $menus = OrderItems::with(['order', 'menu'])  // Eager load 'order' and 'menu'
+        ->where('order_id', $orderId)  // Filter by order_id
+        ->where('menu_id', $menuId)    // Filter by menu_id
+        ->whereHas('order', function($query) {
+            $query->where('order_status', 'pending'); // Ensure the order's status is 'pending'
+        })
+        ->get();
+    
+    
         if ($menus->isEmpty()) {
             return redirect()->route('order.cart')->with('error', 'No items found for this order.');
         }
-
+    
         return view('manageOrder.editOrderCustomization', compact('menus'));
     }
+    
+
+    
+
 
     //update customization
     public function update(Request $request, $orderId)
@@ -52,49 +63,80 @@ class OrderController extends Controller
         return redirect()->route('order.cart')->with('success', 'Order updated successfully!');
     }
 
-    //store order to cart
-    // dd($request->all());
+
+
     public function storeToCart(Request $request)
-{
-    $validated = $request->validate([
-        'menu_id' => 'required|exists:menus,id', // Ensure menu item exists
-        'order_quantity' => 'required|integer|min:1',
-        'order_portion' => 'nullable|string',
-        'order_remark' => 'nullable|string',
-        'order_total' => 'nullable|string',
-    ]);
-
-    // Check if an active order exists for the user
-    $userId = Auth::id(); // Assuming the user is authenticated
-    $order = Order::firstOrCreate(
-        ['user_id' => $userId, 'order_status' => 'pending'],
-        ['order_date' => now(), 'order_time' => now(), 'order_total' => 0]
-    );
-
-    try {
-        // Find the menu item and calculate the total price
-        $menu = Menu::findOrFail($validated['menu_id']);
-        $totalPrice = $menu->price * $validated['order_quantity'];
-
-        // Create order item
-        OrderItems::create([
-            'menu_id' => $validated['menu_id'],
-            'order_id' => $order->id,
-            'order_quantity' => $validated['order_quantity'],
-            'order_portion' => $validated['order_portion'],
-            'order_remark' => $validated['order_remark'],
+    {
+        $validated = $request->validate([
+            'menu_id' => 'required|exists:menus,id', // Ensure menu item exists
+            'order_quantity' => 'required|integer|min:1',
+            'order_portion' => 'nullable|string',
+            'order_remark' => 'nullable|string',
         ]);
-
-        // Update the order total
-        $order->order_total += $totalPrice;
-        $order->save();
-
-        return redirect()->back()->with('success', 'Successfully Added to Cart.');
-    } catch (\Exception $e) {
-        // Log the error and return a user-friendly message
-        return redirect()->back()->withErrors('Something went wrong. Please try again.');
+    
+        // Check if an active order exists for the user
+        $userId = Auth::id(); // Assuming the user is authenticated
+        $order = Order::firstOrCreate(
+            ['user_id' => $userId, 'order_status' => 'pending'],
+            ['order_date' => now(), 'order_time' => now(), 'order_total' => 0]
+        );
+    
+        try {
+            // Find the menu item and calculate the total price
+            $menu = Menu::findOrFail($validated['menu_id']);
+            $basePrice = $menu->price; // Original price of the menu item
+            $totalPrice = $basePrice * $validated['order_quantity']; // Initial total price based on quantity
+    
+            // Add RM2 if the portion is "large"
+            if ($validated['order_portion'] === 'large') {
+                $totalPrice += 2 * $validated['order_quantity']; // Add RM2 for each large portion
+            }
+    
+            // Check if the item already exists in the cart
+            $existingItem = OrderItems::where('order_id', $order->id)
+                ->where('menu_id', $validated['menu_id'])
+                ->first();
+    
+            // Set default value for 'order_remark' if it is null
+            $remark = $validated['order_remark'] ?? 'No Remark';
+    
+            if ($existingItem) {
+                // If the item exists, update the quantity
+                $existingItem->order_quantity += $validated['order_quantity']; // Add to the existing quantity
+                $existingItem->order_portion = $validated['order_portion'] ?? $existingItem->order_portion; // Update the portion if given
+                $existingItem->order_remark = $remark; // Set the remark, default to 'No Remark' if not provided
+                $existingItem->save();
+    
+                // Update the order total
+                $order->order_total += $totalPrice; // Add the new quantity to the total, including the portion adjustment
+                $order->save();
+    
+                return redirect()->back()->with('success', 'Successfully Updated in Cart.');
+            } else {
+                // If the item does not exist in the cart, create a new order item
+                OrderItems::create([
+                    'menu_id' => $validated['menu_id'],
+                    'order_id' => $order->id,
+                    'order_quantity' => $validated['order_quantity'],
+                    'order_portion' => $validated['order_portion'],
+                    'order_remark' => $remark, // Set the remark, default to 'No Remark' if not provided
+                ]);
+    
+                // Update the order total
+                $order->order_total += $totalPrice; // Add the price for this new item, including any extra charges for large portion
+                $order->save();
+    
+                return redirect()->back()->with('success', 'Successfully Added to Cart.');
+            }
+        } catch (\Exception $e) {
+            // Log the error and return a user-friendly message
+            return redirect()->back()->withErrors('Something went wrong. Please try again.');
+        }
     }
-}
+    
+
+
+
 
 
 
@@ -102,7 +144,7 @@ class OrderController extends Controller
     public function showCartList()
     {
         // $userId = auth()->id(); // Get the authenticated user ID
-        $userId = 2; // Get the authenticated user ID
+        $userId =  Auth::id(); // Get the authenticated user ID
 
         // Retrieve all items for all pending orders for the user
         $cartItems = OrderItems::whereHas('order', function ($query) use ($userId) {
@@ -118,7 +160,7 @@ class OrderController extends Controller
     public function checkout(Request $request)
     {
         // Hardcoding the user ID for now; replace with auth()->id() for production
-        $userId = 2;
+        $userId =  Auth::id();;
 
         // Retrieve the pending order for the user
         $order = Order::where('user_id', $userId)->where('order_status', 'pending')->first();
@@ -155,7 +197,7 @@ class OrderController extends Controller
     //show confirmation
     public function showOrderConfirmation()
     {
-        $userId = 2;
+        $userId =  Auth::id();;
 
         $cartItems = OrderItems::whereHas('order', function ($query) use ($userId) {
             $query->where('user_id', $userId)->where('order_status', 'pending');
@@ -168,25 +210,29 @@ class OrderController extends Controller
 
 
     public function confirmOrder(Request $request, $orderId)
-    {
-        $order = Order::find($orderId);
+{
+    $order = Order::find($orderId);
 
-        if (!$order || $order->order_status !== 'pending') {
-            return response()->json([
-                'success' => false,
-                'message' => 'Order not found or already processed.',
-            ], 400); // Use a 400 status code for client error
-        }
-
-        // Update the order status
-        $order->order_status = 'success';
-        $order->save();
-
+    if (!$order || $order->order_status !== 'pending') {
         return response()->json([
-            'success' => true,
-            'message' => 'Order placed successfully!',
-        ], 200); // Use a 200 status code for success
+            'success' => false,
+            'message' => 'Order not found or already processed.',
+        ], 400); // Use a 400 status code for client error
     }
+
+    // Update the order status
+    $order->order_status = 'success';
+    $order->save();
+
+    // Flash a success message
+    session()->flash('order_placed', 'Order placed successfully!');
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Order placed successfully!',
+    ], 200); // Use a 200 status code for success
+}
+
 
 
     public function orderStatus($orderId)
@@ -218,22 +264,24 @@ class OrderController extends Controller
 
 
     public function showHistory()
-    {
-        $userId = 2; // Get the authenticated user's ID
+{
+    $userId = Auth::id(); // Get the authenticated user's ID
 
-        // Fetch orders with their items and related menu data
-        $orders = Order::where('user_id', $userId)
-            ->with('items.menu') // Eager load items and menus
-            ->get();
+    // Fetch orders with their items and related menu data, ordered by the most recent date
+    $orders = Order::where('user_id', $userId)
+        ->with('items.menu') // Eager load items and menus
+        ->orderBy('created_at', 'desc') // Order by the most recent orders (descending)
+        ->get();
 
-        // Redirect if no orders are found
-        if ($orders->isEmpty()) {
-            return redirect()->route('order.cart')->with('error', 'No orders found.');
-        }
-
-        // Pass the orders to the view
-        return view('manageOrder.orderHistory', compact('orders'));
+    // Redirect if no orders are found
+    if ($orders->isEmpty()) {
+        return redirect()->route('order.cart')->with('error', 'No orders found.');
     }
+
+    // Pass the orders to the view
+    return view('manageOrder.orderHistory', compact('orders'));
+}
+
 
     public function reorder(Request $request, $orderId)
     {
@@ -242,7 +290,7 @@ class OrderController extends Controller
 
         // Create a new order for the user
         $newOrder = Order::create([
-            'user_id' => 2, // Get the logged-in user's ID
+            'user_id' =>  Auth::id(), // Get the logged-in user's ID
             'order_status' => 'Success', // Set default status
             'order_total' => $originalOrder->items->sum(fn($item) => $item->order_quantity * $item->menu->price),
             'order_date' => now(),
@@ -293,4 +341,38 @@ class OrderController extends Controller
 
         return view('manageOrder.staffOrderDetails', compact('order'));
     }
+
+    //both customer and staff
+    //download receipt
+    public function downloadInvoice($order_id)
+    {
+        $order = Order::with('items.menu')->findOrFail($order_id);
+
+        $data = [
+            'order' => $order,
+            'items' => $order->items,
+        ];
+
+        $pdf = Pdf::loadView('manageOrder.receiptView', $data);
+
+        return $pdf->download('Order_Receipt' . $order->id . '.pdf');
+    }
+
+    public function printInvoice($id)
+{
+    // Retrieve the specific order
+    $order = Order::with('items.menu')->findOrFail($id);
+
+    // Pass data to the view for PDF generation
+    $data = [
+        'order' => $order,
+        'items' => $order->items,
+    ];
+
+    // Load the PDF view
+    $pdf = Pdf::loadView('manageOrder.receiptView', $data);
+
+    // Download the PDF
+    return $pdf->download('Order_Receipt' . $order->id . '.pdf');
+}
 }

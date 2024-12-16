@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
     <!-- Left side: Navbar -->
     <a class="navbar-brand" href="{{ route('profile.edit') }}">Hello, {{ Auth::user()->name }}!</a>
@@ -7,14 +6,29 @@
     <div style="display: flex; align-items: center;">
         <!-- Common links for all users -->
         <a class="navbar-brand" href="{{ route('dashboard') }}" style="margin-right: 15px;">Home</a>
-        <a class="navbar-brand" href="{{ route('menu') }}" style="margin-right: 15px;">Menu</a>
         <a class="navbar-brand" href="{{ route('view_all_feedback', ['id' => Auth::id()]) }}" style="margin-right: 15px;">Feedback</a>
-        <a class="navbar-brand" href="{{ route('inventory.index') }}" style="margin-right: 15px;">Inventory</a>
+        
 
         <!-- Links only visible to staff -->
         @if(Auth::user()->role === 'staff')
+        
+        <a class="navbar-brand" href="{{ route('staff-menu') }}" style="margin-right: 15px;">Menu</a>
+        <a class="navbar-brand" href="{{ route('staff.ordersIndex') }}" style="margin-right: 15px;">Order</a>
+        <a class="navbar-brand" href="{{ route('inventory.index') }}" style="margin-right: 15px;">Inventory</a>
+        <a class="navbar-brand" href="{{ route('profile.index')}}" style="margin-right: 15px;">Profiles</a>
+            @endif
+
+            @if(Auth::user()->role === 'customer')
+            
+        <a class="navbar-brand" href="{{ route('menu') }}" style="margin-right: 15px;">Menu</a>
+            <a class="navbar-brand" href="{{ route('order.cart') }}" style="margin-right: 15px;">
+            Cart<span class="badge bg-primary rounded-circle">{{ $cartItemCount ?? 0 }}</span></a>
+        <a class="navbar-brand" href="{{ route('order.history') }}" style="margin-right: 15px;">History</a>
             <a class="navbar-brand" href="{{ route('profile.index')}}" style="margin-right: 15px;">Profiles</a>
             @endif
+
+            
+            
 
         <!-- Logout -->
         <form method="POST" action="{{ route('logout') }}" style="margin: 0; display: inline;">

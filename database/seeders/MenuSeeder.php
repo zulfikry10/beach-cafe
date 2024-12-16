@@ -19,11 +19,11 @@ class MenuSeeder extends Seeder
             [
                 'name' => 'Ais Jelly Limau',
                 'price' => '4.00',
-                'status' => 'Available',
+                'status' => 'Unvailable',
                 'category' => 'Drink',
                 'image_path' => 'ais-jelly-limau.jpeg',
-                'created_at' => $now, 
-                'updated_at' => $now,
+                'created_at' => '2024-01-23', 
+                'updated_at' => '2024-01-23',
             ],
             [
                 'name' => 'French Fries',
@@ -85,14 +85,14 @@ class MenuSeeder extends Seeder
                 'status' => 'Available',
                 'category' => 'Drink',
                 'image_path' => 'mojito-watermelon.jpeg',
-                'created_at' => $now, 
-                'updated_at' => $now,
+                'created_at' =>'2024-01-23', 
+                'updated_at' => '2024-01-23',
             ],
             [
                 'name' => 'Nasi Lemak Telur',
                 'price' => '5.00',
                 'status' => 'Unavailable',
-                'category' => 'Drink',
+                'category' => 'Food',
                 'image_path' => 'nasi-lemak-telur.jpeg',
                 'created_at' => $now, 
                 'updated_at' => $now,
@@ -121,8 +121,8 @@ class MenuSeeder extends Seeder
                 'status' => 'Available',
                 'category' => 'Side Dish',
                 'image_path' => 'sandwich.jpg',
-                'created_at' => $now, 
-                'updated_at' => $now,
+                'created_at' => '2024-01-23', 
+                'updated_at' => '2024-01-23',
             ],
         ];
       

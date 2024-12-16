@@ -17,6 +17,7 @@ class Order extends Model
         'order_date',
         'order_time',
     ];
+    
 
     public function user(): BelongsTo
     {
@@ -32,4 +33,5 @@ class Order extends Model
     {
         return $this->hasMany(OrderItems::class, 'order_id', 'id');
     }
+
 }

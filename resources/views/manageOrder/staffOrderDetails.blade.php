@@ -94,7 +94,9 @@
             </tbody>
         </table>
         <div class="text-center mt-4">
-            <button class="back-btn" onclick="window.location.href='{{ route('staff.orders.index') }}'">Back</button>
+        <div class="cart-footer">
+                <button class="back-btn" onclick="history.back()">Back</button>
+            </div>
         </div>
     </div>
 @endsection

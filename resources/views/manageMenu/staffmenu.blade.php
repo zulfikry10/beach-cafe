@@ -1,36 +1,3 @@
-
-{{-- @extends('layouts.app')
-
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
-@section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            @foreach ($menuItems as $item)
-                <a href="{{ route('customize.order', ['menu' => $item['id']]) }}" style="text-decoration: none;">
-                    <i class="fas fa-edit" style="padding-right:15px;color:blue"></i>
-
-                    <div class="col-md-4 mb-4">
-                        <div class="card text-center">
-                            <div class="image-container">
-                                <img src="{{ asset('storage/images/' . $item->image_path) }}" class="card-img-top img-fluid"
-                                    alt="{{ $item->name }}">
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">RM {{ $item->price }}</p>
-                                <p class="card-text">Status: {{ $item->status}} </p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            @endforeach
-        </div>
-    </div>
-@endsection --}}
-
 @extends('layouts.app')
 
 <head>
@@ -123,10 +90,9 @@
 
 
         <!-- Drinks Section -->
-        <div class="category-title">Drinks</div>
+        <div class="category-title mb-5">Drinks</div>
         <div class="row">
             @foreach ($menuItems as $item)
-           
                 @if ($item->category === 'Drink')
                     <div class="col-md-4 mb-4">
                         <div class="card text-center">
@@ -139,7 +105,7 @@
                                 <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
                                 <p class="card-text">Status: {{ $item->status }}</p>
                                 <div class="d-flex justify-content-center">
-                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
+                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2" style="width:80px;height:38px;">View</a>
                             &nbsp;&nbsp;&nbsp;
                             <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
                                 @csrf
@@ -156,7 +122,7 @@
         </div>
 
         <!-- Food Section -->
-        <div class="category-title">Food</div>
+        <div class="category-title mb-5">Food</div><br>
         <div class="row">
             @foreach ($menuItems as $item)
             
@@ -172,7 +138,7 @@
                                 <p class="card-text">RM {{ number_format($item->price, 2) }}</p>
                                 <p class="card-text">Status: {{ $item->status }}</p>
                                 <div class="d-flex justify-content-center">
-                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
+                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2" style="width:80px;height:38px;">View</a>
                             &nbsp;&nbsp;&nbsp;
                             <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">
                                 @csrf
@@ -189,7 +155,7 @@
         </div>
 
         <!-- Side Dish Section -->
-        <div class="category-title">Side Dish</div>
+        <div class="category-title mb-5">Side Dish</div><br>
         <div class="row">
             @foreach ($menuItems as $item)
             
@@ -206,7 +172,7 @@
                                 <p class="card-text">Status: {{ $item->status }}</p>
                             </div>
                             <div class="d-flex justify-content-center">
-                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2">View</a>
+                            <a href="{{ route('menu.show', $item->id) }}" class="btn btn-primary mr-2" style="width:80px;height:38px;">View</a>
                             &nbsp;&nbsp;&nbsp;
 
                             <form action="{{ route('menu.destroy', $item->id) }}" method="POST" style="display: inline-block;">

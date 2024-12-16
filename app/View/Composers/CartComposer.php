@@ -11,7 +11,7 @@ class CartComposer
 {
     public function compose(View $view)
     {
-        $userId = Auth::id(); // Get the authenticated user ID
+        $userId =  Auth::id(); // Get the authenticated user ID
         $pendingOrder = Order::where('user_id', $userId)->where('order_status', 'pending')->first();
 
         $cartItemCount = $pendingOrder ? OrderItems::where('order_id', $pendingOrder->id)->count() : 0;

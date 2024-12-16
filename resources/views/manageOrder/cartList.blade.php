@@ -20,7 +20,7 @@
     
         .cart-items {
             width: 100%;
-            padding-top: 20px;
+            padding: 20px 40px 20px 40px;
         }
     
         .cart-item {
@@ -82,6 +82,8 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin :20px 0 0 820px;
+
         }
     
         .checkout-btn:hover {
@@ -89,6 +91,8 @@
         }
     
         .back-btn {
+            text-decoration: none;
+            margin-top: 20px;
             background: darkgray;
             color: #fff;
             font-size: 18px;
@@ -98,7 +102,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-    
+
         .back-btn:hover {
             background: grey;
         }
@@ -118,14 +122,14 @@
                     @else
                         @foreach ($cartItems as $data)
                             <div class="cart-item" data-price="{{ $data->menu->price }}">
-                                <img src="{{ asset('storage/images/' . $data->menu->image_path) }}"
+                                <img src="{{ asset('asset/default-image/' . $data->menu->image_path) }}"
                                     alt="{{ $data->menu->name }}" style="width: 200px;">
                                 <div class="cart-item-details">
                                     <b>
                                         <p class="cart-item-name">{{ $data->menu->name }}</p>
                                     </b>
                                     <p class="cart-item-remark">{{ $data->order_portion }}</p>
-                                    <p class="cart-item-remark"><b><i>***{{ $data->order_remark }}</i></b></p>
+                                    <p class="cart-item-remark"><b><i>*{{ $data->order_remark }}</i></b></p>
                                     <div class="cart-item-quantity">
                                         <button type="button" class="minus">-</button>
                                         <input type="number" class="quantity-input" name="cartItems[{{ $data->id }}]"
@@ -133,7 +137,7 @@
                                         <button type="button" class="plus">+</button>
                                         <br><br>
                                         <!-- Inside the foreach loop for cart items -->
-                                        <a href="{{ route('order.edit', $data->menu->id) }}">
+                                        <a href="{{ route('order.edit', ['orderId' => $data->order_id, 'menuId' => $data->menu_id]) }}">
                                             <i class="fas fa-edit" style="padding-right:15px;color:blue"></i>
                                         </a>
 
@@ -152,13 +156,19 @@
                         @endforeach
                         <div class="total">Total: RM <span id="grand-total">0</span></div>
                         <div class="cart-footer">
-                            <button type="button" class="back-btn" onclick="history.back()">Back</button>
                             <button type="submit" class="checkout-btn">Checkout</button>
                         </div>
                     @endif
                 </form>
             </div>
         </div>
+        
+        <div class="cart-footer">
+            <div style="margin-top:50px;">
+                <a href="{{ route('menu') }}" class="back-btn">Back to Menu</a>
+            </div>
+        </div>
+
         {{-- !-- Padam Aduan Modal --> --}}
         <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
             aria-hidden="true">
@@ -217,7 +227,7 @@
         updateTotals();
     </script>
 
-    <!--  End Padam Aduan Modal -->
+    <!--  End Padam Aduan Modal -->
     <script>
         function showDeleteConfirmation(deleteUrl) {
             // Set the href attribute of the delete link in the modal

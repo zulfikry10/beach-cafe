@@ -1,31 +1,56 @@
 @extends('layouts.app')
 
+<head>
+    <!-- Font Awesome for the bell icon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
 @section('content')
-    <style>
-        .back-btn {
-            margin-top: 70px;
-            background: darkgray;
-            color: #fff;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+<style>
+
+    .back-btn {
+        margin-top: 20px 0 50px 0;
+        background: darkgray;
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        float:left;
+    }
+
+    .back-btn:hover {
+        background: grey;
+    }
+
+    .notification-icon {
             cursor: pointer;
+            font-size: 18px;
+            color: grey;
+            margin-left: 10px;
         }
 
-        .back-btn:hover {
-            background: grey;
+        .notification-icon:hover {
+            color: blue;
         }
-    </style>
+
+        .notification-message {
+            display: none;
+            background-color: #90EE90;
+            color: #721c24;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+</style>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <div class="container mt-5">
-        @if (session('success'))
-            <script>
-                alert("{{ session('success') }}");
-            </script>
-        @endif
-        <h2 class="text-center mb-4">Edit Your Order</h2>
 
+        <h2 class="text-center mb-4">Edit Your Order</h2>
         @if ($menus->isNotEmpty())
             <form action="{{ route('order.update', $menus->first()->order_id) }}" method="POST">
                 @csrf
@@ -35,11 +60,13 @@
                     <div class="card p-4 shadow mb-4">
                         <div class="row">
                             <div class="col-md-4">
-                                <img src="{{ asset('storage/images/' . $menu->menu->image_path) }}" 
+                                <img src="{{ asset('asset/default-image/' . $menu->menu->image_path) }}" 
                                      alt="{{ $menu->menu->name }}" style="width: 300px;">
                             </div>
-                            <div class="col-md-8" style="margin-left: 50px;">
-                                <h3>{{ $menu->menu->name }}</h3>
+                            <div class="col-md-8">
+                            <div>
+                                <span><strong style="font-size:x-large;">{{ $menu->menu->name }}</strong> / <i>RM{{ $menu->menu->price }}</i></span>
+                            </div><br>
 
                                 <!-- Portion Size -->
                                 <div class="mb-3">
@@ -51,10 +78,18 @@
                                 </div>
 
                                 <!-- Special Instructions -->
-                                <div class="mb-3">
-                                    <label for="order_remark_{{ $menu->id }}" class="form-label"><strong>Remark</strong></label>
-                                    <textarea id="order_remark_{{ $menu->id }}" name="order_remark[{{ $menu->id }}]" rows="3" class="form-control">{{ $menu->order_remark }}</textarea>
-                                </div>
+                            <div class="mb-3">
+                                <label for="special-instructions" class="form-label"><strong>Remark</strong>
+                                    <span class="notification-icon" id="notificationIcon">
+                                        <i class="fas fa-info-circle"></i>
+                                    </span>
+                                </label>
+                                <!-- Hidden message that will be displayed when the bell is clicked -->
+                                <div class="notification-message" id="notificationMessage">
+                                    Remark your order to tell the kitchen.
+                                </div><br>
+                                <textarea id="order_remark_{{ $menu->id }}" name="order_remark[{{ $menu->id }}]" rows="3" class="form-control" placeholder="E.g., No pickles, extra sauce">{{ $menu->order_remark }}</textarea>
+                            </div>
 
                                 <!-- Quantity -->
                                 <div class="mb-3">
@@ -64,13 +99,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">Update Order</button>
+                        </div>
+                    </div> 
                 @endforeach
-
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-lg">Update Order</button>
-                </div>
             </form>
+                
         @else
             <p class="text-center text-danger">No items found for this order.</p>
         @endif
@@ -79,4 +114,22 @@
             <button class="back-btn" onclick="history.back()">Back</button>
         </div>
     </div>
+
+        <!-- Bootstrap JS (Necessary for modals and other components) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript to Handle Click Event -->
+<script>
+    // Handle the click event for the bell icon
+    document.getElementById('notificationIcon').addEventListener('click', function() {
+        // Show or hide the notification message
+        var message = document.getElementById('notificationMessage');
+        if (message.style.display === 'none' || message.style.display === '') {
+            message.style.display = 'block'; // Show message
+        } else {
+            message.style.display = 'none'; // Hide message
+        }
+    });
+</script>
+    
 @endsection

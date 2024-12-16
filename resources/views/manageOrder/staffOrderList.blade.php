@@ -64,7 +64,7 @@
                         <td>{{ $order->created_at->format('F d, Y h:i A') }}</td>
                         <td>RM {{ number_format($order->items->sum(fn($item) => $item->order_quantity * $item->menu->price), 2) }}</td>
                         <td>
-                            <a href="{{ route('order.details', $order->id) }}" class="btn-view">
+                            <a href="{{ route('staff.orderDetails', $order->id) }}" class="btn-view" style="text-decoration:none;">
                                 <i class="fas fa-eye"></i> View
                             </a>
                         </td>
@@ -72,10 +72,5 @@
                 @endforeach
             </tbody>
         </table>
-
-        <!-- Pagination (if applicable) -->
-        <div class="d-flex justify-content-center mt-3">
-            {{ $orders->links() }}
-        </div>
     </div>
 @endsection
